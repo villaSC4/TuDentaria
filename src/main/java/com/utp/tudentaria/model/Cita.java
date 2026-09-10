@@ -43,6 +43,20 @@ public class Cita {
     @Column(columnDefinition = "TEXT")
     private String notas;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tratamiento_id")
+    private Tratamiento tratamiento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    public Cita() {}
+
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
@@ -69,4 +83,13 @@ public class Cita {
 
     public String getNotas() { return notas; }
     public void setNotas(String notas) { this.notas = notas; }
+
+    public Doctor getDoctor() { return doctor; }
+    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
+
+    public Tratamiento getTratamiento() { return tratamiento; }
+    public void setTratamiento(Tratamiento tratamiento) { this.tratamiento = tratamiento; }
+
+    public Paciente getPaciente() { return paciente; }
+    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
 }

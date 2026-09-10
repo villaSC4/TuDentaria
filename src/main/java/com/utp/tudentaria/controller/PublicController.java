@@ -2,8 +2,8 @@ package com.utp.tudentaria.controller;
 
 import com.utp.tudentaria.model.Cita;
 import com.utp.tudentaria.model.Usuario;
-import com.utp.tudentaria.repository.CitaRepository;
-import com.utp.tudentaria.repository.DoctorRepository;
+import com.utp.tudentaria.service.CitaService;
+import com.utp.tudentaria.service.DoctorService;
 import com.utp.tudentaria.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PublicController {
 
     private final UsuarioService usuarioService;
-    private final CitaRepository citaRepository;
-    private final DoctorRepository doctorRepository;
+    private final CitaService citaService;
+    private final DoctorService doctorService;
 
-    public PublicController(UsuarioService usuarioService, CitaRepository citaRepository, DoctorRepository doctorRepository) {
+    public PublicController(UsuarioService usuarioService, CitaService citaService, DoctorService doctorService) {
         this.usuarioService = usuarioService;
-        this.citaRepository = citaRepository;
-        this.doctorRepository = doctorRepository;
+        this.citaService = citaService;
+        this.doctorService = doctorService;
     }
 
     @GetMapping("/")
@@ -56,7 +56,7 @@ public class PublicController {
             return "index";
         }
 
-        citaRepository.save(cita);
+        citaService.guardar(cita);
         redirectAttributes.addFlashAttribute("exitoCita", "Tu solicitud de cita ha sido enviada con éxito. Nos comunicaremos contigo pronto.");
 
         if (esContacto) {
@@ -67,7 +67,7 @@ public class PublicController {
 
     @GetMapping("/nosotros")
     public String nosotros(Model model) {
-        model.addAttribute("doctores", doctorRepository.findAll());
+        model.addAttribute("doctores", doctorService.listarTodos());
         return "pages/nosotros";
     }
 

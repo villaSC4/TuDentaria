@@ -1,0 +1,95 @@
+=== ppt/slides/slide1.xml ===
+“SISTEMA WEB DE GESTIÓN CLÍNICA ODONTOLÓGICA”
+Proyecto: TuDentaria
+Curso:
+Autores:
+Lima - Perú, 2026
+
+=== ppt/slides/slide10.xml ===
+CAPTURA DE PANTALLA 1
+Pega aquí la primera imagen de los resultados (Landing Page / Inicio / Portal).
+CAPTURA DE PANTALLA 2
+Pega aquí la segunda imagen de los resultados (Módulos de Gestión / Panel de Control).
+Capítulo 2: Desarrollo del Proyecto - 2.4 Resultados
+
+=== ppt/slides/slide11.xml ===
+Configuración del Motor MySQL: El motor InnoDB es obligatorio en la base de datos para garantizar el soporte completo de restricciones de clave foránea (FK) y mantener la integridad referencial.
+Secuencia de Servicios: Se debe verificar el inicio correcto del servicio de MySQL (puerto 3306) antes del arranque de Spring Boot para asegurar la correcta conexión del pool HikariCP.
+Permisos de Directorio: La carpeta local destinada al almacenamiento de archivos adjuntos (/uploads) requiere permisos de lectura y escritura habilitados en el servidor.
+Seguridad en Producción: Se recomienda habilitar un certificado TLS/HTTPS para el cifrado de datos en tránsito antes de realizar el despliegue final en producción.
+Observaciones
+
+=== ppt/slides/slide12.xml ===
+Base de Datos Estructurada: Se diseñó y modeló exitosamente una base de datos relacional para resguardar la información de pacientes, usuarios, doctores y citas médicas sin redundancias.
+Mapeo de Persistencia Eficiente: La integración de Spring Boot 3.3.5 con Spring Data JPA permitió una interacción ORM limpia y mantenible con el motor de base de datos MySQL.
+Despliegue y Funcionalidad Validada: La plataforma fue desplegada de forma operativa cumpliendo con los estándares de seguridad mediante Spring Security y satisfaciendo los requisitos funcionales trazados.
+Conclusiones
+
+=== ppt/slides/slide13.xml ===
+¿Preguntas?
+Gracias por su atención.
+
+=== ppt/slides/slide2.xml ===
+Contexto del Sector
+Informatización Odontológica: Aborda la digitalización y optimización del flujo administrativo y asistencial en consultorios y clínicas dentales.
+Problemática Actual: Registro manual o descentralizado de atención de pacientes, reserva de citas y gestión de solicitudes o incidencias web.
+Propuesta de Solución
+Impacto Operativo: Elimina ineficiencias, demoras en historias clínicas e inconsistencias en el control del personal médico.
+Arquitectura Robusta: Plataforma web basada en Spring Boot con front-end adaptativo, garantizando seguridad, confidencialidad e integridad conforme a exigencias regulatorias.
+Introducción
+
+=== ppt/slides/slide3.xml ===
+Desorganización de Citas
+Frecuencia de cruce de horarios entre odontólogos e ineficiencia en la programación de consultas dentales.
+Sin Plataforma Integrada
+Falta de una estructura central para el registro seguro de credenciales, historiales y fichas médicas.
+Pérdida de Solicitudes
+Extravío de solicitudes registradas en formularios externos o en soporte físico de papel.
+Falta de Auditoría de Roles
+Ausencia de control estricto entre perfiles (administradores vs. doctores) sobre datos sensibles de pacientes.
+Capítulo 1: Generalidades - 1.1 Situación Problemática
+
+=== ppt/slides/slide4.xml ===
+1.2.1 Objetivo General
+Desarrollar e implementar la plataforma web TuDentaria mediante la tecnología Spring Boot, Thymeleaf y MySQL para optimizar la gestión de personal médico, el flujo de atención a pacientes y la seguridad de datos dentro del entorno odontológico.
+1.2.2 Objetivos Específicos
+Backend Modular: Autenticación y autorización segura basada en roles utilizando Spring Security.
+Interfaz Adaptativa: Frontend responsivo con Bootstrap 5 y Thymeleaf para PC y dispositivos móviles.
+Persistencia Relacional: Base de datos relacional MySQL/PostgreSQL estructurada mediante Spring Data JPA.
+Módulo de Administración: Panel centralizado para gestionar doctores, recibir solicitudes y registrar incidencias.
+Capítulo 1: Generalidades - 1.2 Objetivos
+
+=== ppt/slides/slide5.xml ===
+2.1.1 Reseña
+Enfoque Nacional: Iniciativa tecnológica adaptada a la realidad operativa del sector salud peruano.
+Stack Tecnológico: Integra buenas prácticas de ingeniería de software con Java 17 y Spring Boot 3.3.5.
+Contenerización: Configuración estructurada mediante Docker para simplificar despliegues en entornos cloud.
+2.1.2 Descripción de la Solución
+Acceso Seguro: Sistema multi-rol con credenciales encriptadas mediante algoritmos de seguridad (BCrypt).
+Panel Administrativo: Interfaz integral para coordinar doctores, atenciones y respuesta a incidencias médicas.
+Portal Asistencial: Canal continuo para la gestión e historial del paciente en la clínica.
+Capítulo 2: Desarrollo del Proyecto - 2.1 Resumen Ejecutivo
+
+=== ppt/slides/slide6.xml ===
+Capítulo 2: Desarrollo del Proyecto - 2.2 Requisitos
+
+=== ppt/slides/slide7.xml ===
+
+=== ppt/slides/slide8.xml ===
+Modelo Relacional MySQL
+Estructura orientada al mapeo relacional con Spring Data JPA:
+Tablas de Usuarios y Doctores.
+Módulo de Citas y Horarios.
+Registro de Casos e Incidencias.
+Integridad referencial con motor InnoDB.
+ESPACIO RESERVADO PARA EL DIAGRAMA DE LA BASE DE DATOS
+Pega aquí la imagen / esquema relacional (Modelo Entidad-Relación) del informe.
+Capítulo 2: Desarrollo del Proyecto - 2.3 Diseño de la Base de Datos
+
+=== ppt/slides/slide9.xml ===
+CAPTURA DE PANTALLA 1
+Pega aquí la primera imagen de los resultados (Landing Page / Inicio / Portal).
+CAPTURA DE PANTALLA 2
+Pega aquí la segunda imagen de los resultados (Módulos de Gestión / Panel de Control).
+Capítulo 2: Desarrollo del Proyecto - 2.4 Resultados
+

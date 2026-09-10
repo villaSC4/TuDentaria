@@ -1,0 +1,111 @@
+Facultad de Ingeniería de Sistemas y Electrónica
+Tema del proyecto
+“SISTEMA WEB DE GESTIÓN CLÍNICA ODONTOLÓGICA”
+Autor (es): 
+Vanesa Aguilar Collanqui - U22326778
+Villafuerte Santa Cruz Raquel -U23310337
+Thiago Calderon Galindo -U23250115 
+César Carlos Cardenas Villanueva -U22300602
+López Rosales Leonardo -U23306246
+Curso
+Proyecto Integrador / Desarrollo de Software
+Lima - Perú, 2026
+INTRODUCCIÓNII
+CAPÍTULO 1: GENERALIDADES1
+1.1Situación problemática1
+1.2Objetivos   1
+1.2.1General1
+1.2.2Específicos1
+CAPÍTULO 2: DESARROLLO DEL PROYECTO DE SOFTWARE2
+2.1Resumen ejecutivo2
+2.1.1Reseña2
+2.1.2Descripción de la solución planteada2
+2.2Requisitos2
+2.3Diseño de la base de datos4
+2.4Resultados5
+OBSERVACIONES9
+CONCLUSIONES9
+BIBLIOGRAFÍA6
+INTRODUCCIÓN
+El presente proyecto, titulado TuDentaria, aborda la informatización y optimización del flujo administrativo y asistencial en consultorios y clínicas odontológicas. En la actualidad, una proporción significativa de pequeños y medianos centros de salud dental continúa registrando de manera manual o descentralizada la atención de pacientes, la reserva de citas, la asignación del personal médico y la atención de solicitudes o incidencias web.
+Esta falta de centralización genera ineficiencias operativas, demoras en el seguimiento de historias clínicas e inconsistencias en el control del personal. Ante este panorama, se presenta una solución web robusta basada en la arquitectura Spring Boot con un front-end adaptativo y accesible, garantizando la seguridad, confidencialidad e integridad de la información médica conforme a las exigencias regulatorias y del mercado.
+CAPÍTULO 1: GENERALIDADES
+Situación problemática
+Las clínicas odontológicas enfrentan desafíos diarios relacionados con la gestión de citas, el control de acceso del personal médico (doctores) y la atención oportuna a pacientes solicitantes. Entre las principales falencias detectadas se encuentran:
+Desorganización en la programación de consultas e frecuencia de cruce de horarios entre odontólogos.
+Falta de una plataforma integrada para el registro seguro de credenciales e historiales.
+Pérdida de solicitudes de atención registradas en formularios externos o físicos.
+Falta de auditoría sobre los roles del personal (administradores vs. doctores) y datos sensibles de los pacientes.
+Objetivos
+General
+Desarrollar e implementar la plataforma web TuDentaria mediante la tecnología Spring Boot, Thymeleaf y MySQL para optimizar la gestión de personal médico, el flujo de atención a pacientes y la seguridad de datos dentro del entorno odontológico.
+Específicos
+Diseñar una arquitectura backend modular y escalable que garantice autenticación y autorización segura basada en roles utilizando Spring Security.
+Implementar una interfaz de usuario web responsiva e intuitiva con Bootstrap 5 y Thymeleaf para facilitar la gestión clínica tanto desde computadoras como desde dispositivos móviles.
+Modelar e implementar una base de datos relacional sólida en MySQL/PostgreSQL mediante Spring Data JPA para asegurar la persistencia y coherencia de datos.
+Proporcionar un módulo de administración centralizado que permita gestionar doctores, recibir solicitudes y registrar incidencias médicas de forma eficiente.
+CAPÍTULO 2: DESARROLLO DEL PROYECTO DE SOFTWARE
+Resumen ejecutivo
+Reseña
+TuDentaria surge como una iniciativa tecnológica adaptada al sector salud peruano. La iniciativa integra buenas prácticas de desarrollo de software utilizando Java 17 y Spring Boot 3.3.5, combinadas con estándares de diseño limpios y una estructura contenerizada mediante Docker para simplificar su despliegue en entornos cloud.
+Descripción de la solución planteada
+La solución planteada fue la de crear una página web e infraestructura web para alcanzar los siguientes objetivos y brindar las siguientes funcionalidades:
+Acceso seguro mediante un sistema multi-rol con credenciales encriptadas.
+Panel de control administrativo para dar de alta, modificar y organizar médicos y especialistas.
+Recepción y canalización centralizada de solicitudes enviadas desde la landing page web.
+Almacenamiento y procesamiento adecuado de archivos multimedia o fotografías mediante directorios seguros de subida (uploads).
+Requisitos
+Requisitos funcionales del sistema
+Código
+Nombre / Descripción
+ 
+RQF-0001
+Iniciar sesión: Permitir autenticación con usuario y contraseña mediante Spring Security.
+RQF-0002
+Cerrar sesión: Finalización e invalidación segura de la sesión de usuario activa.
+RQF-0003
+Interfaz de usuario propia: Interfaz adaptativa (responsive) con vistas para administración y doctores.
+RQF-0004
+Reportar un caso: Registro de solicitudes o casos clínicos por parte de pacientes o personal.
+RQF-0005
+Reportar una incidencia: Sistema para la notificación de anomalías clínicas o administrativas.
+RQF-0006
+Gestionar casos: Módulo para la asignación, actualización de estado y seguimiento de casos.
+RQF-0007
+Gestionar incidencias: Control y respuesta a las incidencias registradas en la clínica.
+RQF-0008
+Gestionar información sobre la clínica: Administración de publicaciones, avisos o datos médicos.
+RQF-0009
+Administrar datos sensibles: Mantenimiento de información protegida, roles y archivos clínicos subidos.
+Fuente: elaboración propia.
+Para las condiciones y restricciones del sistema (requisitos no funcionales) se tomaron en cuenta los siguientes:
+Código
+Descripción
+ 
+RNF-0001
+Eficiencia: Tiempos de respuesta reducidos mediante un contenedor optimizado Java 17 JRE y compilación con Maven.
+RNF-0002
+Disponibilidad: Arquitectura desplegable mediante Docker garantizando alta disponibilidad y soporte de red IPv4.
+RNF-0003
+Confidencialidad: Encriptado de contraseñas y control de acceso restringido estricto por Spring Security.
+Diseño de la base de datos
+Resultados
+OBSERVACIONES
+Arquitectura de Persistencia y Motor InnoDB: Para la construcción de la base de datos tudentaria en MySQL, se estableció el uso exclusivo del motor de almacenamiento InnoDB. Esta configuración es indispensable para habilitar la integridad referencial mediante claves foráneas (FOREIGN KEY) y permitir la generación automática de los diagramas de relación en phpMyAdmin y herramientas CASE.
+Secuencia de Despliegue de Servicios: El correcto arranque de la aplicación web en Spring Boot requiere la inicialización previa del servicio MySQL en WampServer (puerto 3306). Esto asegura que la piscina de conexiones HikariCP establezca el enlace con la base de datos de manera exitosa durante el proceso de arranque en el puerto 8080.
+Compatibilidad del Entorno de Desarrollo: El proyecto fue ejecutado utilizando el kit de desarrollo JDK 17/21 dentro del entorno VS Code, aprovechando las herramientas integradas para la gestión de dependencias Maven y la compilación transparente del framework Spring Boot 3.3.5.
+El directorio local de carga (`/uploads`) requiere permisos adecuados de lectura y escritura para permitir la correcta persistencia de imágenes o evidencias médicas.
+Se recomienda implementar un certificado SSL/TLS en el servidor web de despliegue para proteger la transmisión de datos sensibles.
+CONCLUSIONES
+Se diseñó e implementó exitosamente una base de datos relacional en MySQL que satisface los requerimientos funcionales de TuDentaria, estructurando 8 tablas interrelacionadas (user, role, case, incident, citas, doctores, gender e information) que garantizan la integridad de los datos clínicos y de usuarios. 
+La integración entre el backend en Spring Boot 3.3.5 y la base de datos alojada en WampServer mediante Spring Data JPA demostró una gestión eficiente del mapeo objeto-relacional (ORM), permitiendo consultas dinámicas y reduciendo la complejidad en la persistencia de datos. 
+El despliegue de la aplicación web en el servidor embebido Apache Tomcat (puerto 8080) validó el correcto funcionamiento de las capas de controlador, servicio y repositorio del sistema, logrando una plataforma funcional para la gestión odontológica. 
+.
+BIBLIOGRAFÍA
+Connect2id. (2023). Nimbus JOSE+JWT Documentation: JSON Web Tokens in Java. Connect2id Ltd. https://connect2id.com/products/nimbus-jose-jwt
+Hibernate. (2024). Hibernate ORM 6.5 User Guide. Red Hat, Inc. https://hibernate.org/orm/documentation/6.5/
+Otto, M., & Thornton, J. (2024). Bootstrap v5.3 Documentation: Responsive front-end framework. Bootstrap Core Team. https://getbootstrap.com/docs/5.3/
+Oracle. (2024). MySQL 8.4 Reference Manual: InnoDB Storage Engine and Foreign Key Constraints. Oracle Corporation. https://dev.mysql.com/doc/refman/8.4/en/innodb-storage-engine.html
+Spring Initializr. (2024). Spring Boot Reference Documentation (v3.3.5). VMware, Inc. https://docs.spring.io/spring-boot/docs/current/reference/html/
+Universidad Tecnológica del Perú. (2026). Material de estudio del curso Marco de Desarrollo Web. UTP.
+WampServer. (2024). WampServer: Web development environment on Windows. Anaska. https://www.wampserver.com/

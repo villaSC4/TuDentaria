@@ -1,0 +1,80 @@
+2026-09-09 09:00:02.762049-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT @[*]@character_set_database, @@sql_mode"; se esperaba "identifier"
+Syntax error in SQL statement "SELECT @[*]@character_set_database, @@sql_mode"; expected "identifier"; SQL statement:
+SELECT @@character_set_database, @@sql_mode [42001-224]
+2026-09-09 09:00:04.180275-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table citas (id integer not null auto_increment, apellido varchar(50) not null, email varchar(255) not null, estado varchar(255), fecha date not null, motivo varchar(150) not null, nombre varchar(50) not null, notas TEXT, telephone varchar(20) not null, doctor_id integer, paciente_id integer, tratamiento_id integer, primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table citas (id integer not null auto_increment, apellido varchar(50) not null, email varchar(255) not null, estado varchar(255), fecha date not null, motivo varchar(150) not null, nombre varchar(50) not null, notas TEXT, telephone varchar(20) not null, doctor_id integer, paciente_id integer, tratamiento_id integer, primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table citas (id integer not null auto_increment, apellido varchar(50) not null, email varchar(255) not null, estado varchar(255), fecha date not null, motivo varchar(150) not null, nombre varchar(50) not null, notas TEXT, telephone varchar(20) not null, doctor_id integer, paciente_id integer, tratamiento_id integer, primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.191520-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table doctores (id integer not null auto_increment, especialidad varchar(255) not null, imagen varchar(255), nombre varchar(255) not null, especialidad_id integer, primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table doctores (id integer not null auto_increment, especialidad varchar(255) not null, imagen varchar(255), nombre varchar(255) not null, especialidad_id integer, primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table doctores (id integer not null auto_increment, especialidad varchar(255) not null, imagen varchar(255), nombre varchar(255) not null, especialidad_id integer, primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.194626-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table especialidades (id integer not null auto_increment, descripcion varchar(255), nombre varchar(100) not null, primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table especialidades (id integer not null auto_increment, descripcion varchar(255), nombre varchar(100) not null, primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table especialidades (id integer not null auto_increment, descripcion varchar(255), nombre varchar(100) not null, primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.199482-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table pacientes (id integer not null auto_increment, apellido varchar(100) not null, dni varchar(20), email varchar(100), nombre varchar(100) not null, telefono varchar(20), primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table pacientes (id integer not null auto_increment, apellido varchar(100) not null, dni varchar(20), email varchar(100), nombre varchar(100) not null, telefono varchar(20), primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table pacientes (id integer not null auto_increment, apellido varchar(100) not null, dni varchar(20), email varchar(100), nombre varchar(100) not null, telefono varchar(20), primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.202696-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table tratamientos (id integer not null auto_increment, descripcion varchar(255), duracion_minutos integer, nombre varchar(100) not null, precio float(53) not null, primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table tratamientos (id integer not null auto_increment, descripcion varchar(255), duracion_minutos integer, nombre varchar(100) not null, precio float(53) not null, primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table tratamientos (id integer not null auto_increment, descripcion varchar(255), duracion_minutos integer, nombre varchar(100) not null, precio float(53) not null, primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.207129-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table usuarios (id integer not null auto_increment, apellido varchar(255) not null, email varchar(255) not null, nombre varchar(255) not null, password varchar(255) not null, primary key (id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table usuarios (id integer not null auto_increment, apellido varchar(255) not null, email varchar(255) not null, nombre varchar(255) not null, password varchar(255) not null, primary key (id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table usuarios (id integer not null auto_increment, apellido varchar(255) not null, email varchar(255) not null, nombre varchar(255) not null, password varchar(255) not null, primary key (id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.209903-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table usuarios_roles (usuario_id integer not null, rol_id integer not null, primary key (usuario_id, rol_id)) engine[*]=InnoDB"; se esperaba "identifier"
+Syntax error in SQL statement "create table usuarios_roles (usuario_id integer not null, rol_id integer not null, primary key (usuario_id, rol_id)) engine[*]=InnoDB"; expected "identifier"; SQL statement:
+create table usuarios_roles (usuario_id integer not null, rol_id integer not null, primary key (usuario_id, rol_id)) engine=InnoDB [42001-224]
+2026-09-09 09:00:04.212905-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ESPECIALIDADES" not found (this database is empty); SQL statement:
+alter table especialidades drop index UKkq918o2plf4a6b25osvl96dj7 [42104-224]
+2026-09-09 09:00:04.214428-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "ESPECIALIDADES" no encontrada
+Table "ESPECIALIDADES" not found; SQL statement:
+alter table especialidades add constraint UKkq918o2plf4a6b25osvl96dj7 unique (nombre) [42102-224]
+2026-09-09 09:00:04.215829-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PACIENTES" not found (this database is empty); SQL statement:
+alter table pacientes drop index UKhol387x0ourgruynyqewdhv37 [42104-224]
+2026-09-09 09:00:04.216521-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PACIENTES" no encontrada
+Table "PACIENTES" not found; SQL statement:
+alter table pacientes add constraint UKhol387x0ourgruynyqewdhv37 unique (dni) [42102-224]
+2026-09-09 09:00:04.217233-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+alter table usuarios drop index UKkfsp0s1tflm1cwlj8idhqsad0 [42104-224]
+2026-09-09 09:00:04.218219-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS" no encontrada
+Table "USUARIOS" not found; SQL statement:
+alter table usuarios add constraint UKkfsp0s1tflm1cwlj8idhqsad0 unique (email) [42102-224]
+2026-09-09 09:00:04.218955-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CITAS" no encontrada
+Table "CITAS" not found; SQL statement:
+alter table citas add constraint FKa0culq17omm7ln12kktrip4em foreign key (doctor_id) references doctores (id) [42102-224]
+2026-09-09 09:00:04.220844-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CITAS" no encontrada
+Table "CITAS" not found; SQL statement:
+alter table citas add constraint FKnqrsxxcuysfcxiekvixm7h8r1 foreign key (paciente_id) references pacientes (id) [42102-224]
+2026-09-09 09:00:04.222615-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CITAS" no encontrada
+Table "CITAS" not found; SQL statement:
+alter table citas add constraint FKe6p57hynoihfhdobx41ehglh0 foreign key (tratamiento_id) references tratamientos (id) [42102-224]
+2026-09-09 09:00:04.225667-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "DOCTORES" no encontrada
+Table "DOCTORES" not found; SQL statement:
+alter table doctores add constraint FK2keh9rp5uh3q9q7oopj6hy1p4 foreign key (especialidad_id) references especialidades (id) [42102-224]
+2026-09-09 09:00:04.227529-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS_ROLES" no encontrada
+Table "USUARIOS_ROLES" not found; SQL statement:
+alter table usuarios_roles add constraint FK5338ehgluufgc8bpj08nrq970 foreign key (rol_id) references roles (id) [42102-224]
+2026-09-09 09:00:04.228709-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS_ROLES" no encontrada
+Table "USUARIOS_ROLES" not found; SQL statement:
+alter table usuarios_roles add constraint FKqcxu02bqipxpr7cjyj9dmhwec foreign key (usuario_id) references usuarios (id) [42102-224]
+2026-09-09 09:00:05.585726-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ROLES" not found (this database is empty); SQL statement:
+select r1_0.id,r1_0.nombre from roles r1_0 where r1_0.nombre=? [42104-224]

@@ -1,7 +1,7 @@
 package com.utp.tudentaria.controller;
 
 import com.utp.tudentaria.model.Doctor;
-import com.utp.tudentaria.repository.DoctorRepository;
+import com.utp.tudentaria.service.DoctorService;
 import com.utp.tudentaria.service.UploadFileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +14,17 @@ import java.io.IOException;
 @RequestMapping("/admin/doctores")
 public class AdminDoctorController {
 
-    private final DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
     private final UploadFileService uploadFileService;
 
-    public AdminDoctorController(DoctorRepository doctorRepository, UploadFileService uploadFileService) {
-        this.doctorRepository = doctorRepository;
+    public AdminDoctorController(DoctorService doctorService, UploadFileService uploadFileService) {
+        this.doctorService = doctorService;
         this.uploadFileService = uploadFileService;
     }
 
     @GetMapping
     public String listarDoctores(Model model) {
-        model.addAttribute("doctores", doctorRepository.findAll());
+        model.addAttribute("doctores", doctorService.listarTodos());
         if (!model.containsAttribute("doctor")) {
             model.addAttribute("doctor", new Doctor());
         }
@@ -42,7 +42,7 @@ public class AdminDoctorController {
                     doctor.setImagen(nombreImagen);
                 }
             } else {
-                Doctor existente = doctorRepository.findById(doctor.getId()).orElse(null);
+                Doctor existente = doctorService.buscarPorId(doctor.getId()).orElse(null);
                 if (existente != null) {
                     if (!file.isEmpty()) {
                         uploadFileService.eliminarImagen(existente.getImagen());
@@ -53,7 +53,7 @@ public class AdminDoctorController {
                     }
                 }
             }
-            doctorRepository.save(doctor);
+            doctorService.guardar(doctor);
             redirectAttributes.addFlashAttribute("exito", "Doctor guardado correctamente.");
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("error", "Error al procesar la imagen.");
@@ -63,10 +63,10 @@ public class AdminDoctorController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarDoctor(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-        Doctor doctor = doctorRepository.findById(id).orElse(null);
+        Doctor doctor = doctorService.buscarPorId(id).orElse(null);
         if (doctor != null) {
             uploadFileService.eliminarImagen(doctor.getImagen());
-            doctorRepository.deleteById(id);
+            doctorService.eliminarPorId(id);
             redirectAttributes.addFlashAttribute("exito", "Doctor eliminado correctamente.");
         } else {
             redirectAttributes.addFlashAttribute("error", "No se encontró el doctor.");
