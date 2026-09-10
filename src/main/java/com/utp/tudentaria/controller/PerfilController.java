@@ -43,8 +43,8 @@ public class PerfilController {
 
     @PostMapping("/actualizar")
     public String actualizarDatos(@ModelAttribute("usuario") Usuario datosActualizados,
-                                  Authentication authentication,
-                                  RedirectAttributes redirectAttributes) {
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
 
         if (authentication == null) {
             return "redirect:/login";
@@ -54,11 +54,11 @@ public class PerfilController {
         Usuario usuarioExistente = usuarioRepository.findByEmail(emailActualSesion).orElse(null);
 
         if (usuarioExistente != null) {
-            // Si el correo cambia, validar que no pertenezca a otra cuenta
             if (!usuarioExistente.getEmail().equalsIgnoreCase(datosActualizados.getEmail())) {
                 Optional<Usuario> emailEnUso = usuarioRepository.findByEmail(datosActualizados.getEmail());
                 if (emailEnUso.isPresent()) {
-                    redirectAttributes.addFlashAttribute("error", "El correo ingresado ya se encuentra registrado por otro usuario.");
+                    redirectAttributes.addFlashAttribute("error",
+                            "El correo ingresado ya se encuentra registrado por otro usuario.");
                     return "redirect:/perfil";
                 }
                 usuarioExistente.setEmail(datosActualizados.getEmail());

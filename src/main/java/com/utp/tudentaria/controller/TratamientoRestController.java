@@ -22,13 +22,11 @@ public class TratamientoRestController {
         this.tratamientoService = tratamientoService;
     }
 
-    // 1. LEER TODOS (READ ALL)
     @GetMapping
     public ResponseEntity<List<Tratamiento>> listarTodos() {
         return ResponseEntity.ok(tratamientoService.listarTodos());
     }
 
-    // 2. LEER POR ID (READ BY ID)
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         return tratamientoService.buscarPorId(id)
@@ -40,7 +38,6 @@ public class TratamientoRestController {
                 });
     }
 
-    // 3. CREAR (CREATE)
     @PostMapping
     public ResponseEntity<Tratamiento> crearTratamiento(@Valid @RequestBody Tratamiento tratamiento) {
         tratamiento.setId(null);
@@ -48,7 +45,6 @@ public class TratamientoRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
-    // 4. ACTUALIZAR (UPDATE)
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarTratamiento(@PathVariable Integer id, @Valid @RequestBody Tratamiento details) {
         return tratamientoService.buscarPorId(id)
@@ -67,7 +63,6 @@ public class TratamientoRestController {
                 });
     }
 
-    // 5. ELIMINAR (DELETE)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarTratamiento(@PathVariable Integer id) {
         if (!tratamientoService.existePorId(id)) {

@@ -18,12 +18,12 @@ public class DataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UsuarioRepository usuarioRepository,
-                           RolRepository rolRepository,
-                           EspecialidadRepository especialidadRepository,
-                           TratamientoRepository tratamientoRepository,
-                           DoctorRepository doctorRepository,
-                           PacienteRepository pacienteRepository,
-                           PasswordEncoder passwordEncoder) {
+            RolRepository rolRepository,
+            EspecialidadRepository especialidadRepository,
+            TratamientoRepository tratamientoRepository,
+            DoctorRepository doctorRepository,
+            PacienteRepository pacienteRepository,
+            PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
         this.especialidadRepository = especialidadRepository;
@@ -63,25 +63,29 @@ public class DataInitializer implements CommandLineRunner {
             usuarioRepository.save(admin);
         }
 
-        // Semilla de Especialidades
         Especialidad ortodoncia = especialidadRepository.findByNombre("Ortodoncia y Cirugía")
-                .orElseGet(() -> especialidadRepository.save(new Especialidad("Ortodoncia y Cirugía", "Corrección de dientes y mandíbulas alineadas incorrectamente.")));
-        
-        Especialidad implantologia = especialidadRepository.findByNombre("Implantología y Estética")
-                .orElseGet(() -> especialidadRepository.save(new Especialidad("Implantología y Estética", "Reemplazo de piezas dentales perdidas y diseño de sonrisas.")));
-        
-        especialidadRepository.findByNombre("Endodoncia Avanzada")
-                .orElseGet(() -> especialidadRepository.save(new Especialidad("Endodoncia Avanzada", "Tratamiento especializado de conductos radiculares.")));
+                .orElseGet(() -> especialidadRepository.save(new Especialidad("Ortodoncia y Cirugía",
+                        "Corrección de dientes y mandíbulas alineadas incorrectamente.")));
 
-        // Semilla de Tratamientos
+        Especialidad implantologia = especialidadRepository.findByNombre("Implantología y Estética")
+                .orElseGet(() -> especialidadRepository.save(new Especialidad("Implantología y Estética",
+                        "Reemplazo de piezas dentales perdidas y diseño de sonrisas.")));
+
+        especialidadRepository.findByNombre("Endodoncia Avanzada")
+                .orElseGet(() -> especialidadRepository.save(new Especialidad("Endodoncia Avanzada",
+                        "Tratamiento especializado de conductos radiculares.")));
+
         if (tratamientoRepository.count() == 0) {
-            tratamientoRepository.save(new Tratamiento("Limpieza Dental Profunda (Profilaxis)", "Eliminación de sarro, placa bacteriana y pulido dental.", 80.0, 45));
-            tratamientoRepository.save(new Tratamiento("Blanqueamiento Dental Láser", "Aclaramiento dental seguro de alta efectividad estética.", 250.0, 60));
-            tratamientoRepository.save(new Tratamiento("Ortodoncia con Brackets Metálicos", "Alineación dental integral de arco completo.", 1500.0, 60));
-            tratamientoRepository.save(new Tratamiento("Implante Dental de Titanio", "Rehabilitación fija con perno de titanio biocompatible.", 2200.0, 90));
+            tratamientoRepository.save(new Tratamiento("Limpieza Dental Profunda (Profilaxis)",
+                    "Eliminación de sarro, placa bacteriana y pulido dental.", 80.0, 45));
+            tratamientoRepository.save(new Tratamiento("Blanqueamiento Dental Láser",
+                    "Aclaramiento dental seguro de alta efectividad estética.", 250.0, 60));
+            tratamientoRepository.save(new Tratamiento("Ortodoncia con Brackets Metálicos",
+                    "Alineación dental integral de arco completo.", 1500.0, 60));
+            tratamientoRepository.save(new Tratamiento("Implante Dental de Titanio",
+                    "Rehabilitación fija con perno de titanio biocompatible.", 2200.0, 90));
         }
 
-        // Semilla de Doctores de demostración
         if (doctorRepository.count() == 0) {
             Doctor doc1 = new Doctor("Dra. Raquel Villa", "Ortodoncia y Cirugía", "doctor-1.jpg");
             doc1.setEspecialidadObj(ortodoncia);
@@ -92,10 +96,11 @@ public class DataInitializer implements CommandLineRunner {
             doctorRepository.save(doc2);
         }
 
-        // Semilla de Pacientes de demostración
         if (pacienteRepository.count() == 0) {
-            pacienteRepository.save(new Paciente("Juan", "Pérez López", "72345678", "987654321", "juan.perez@example.com"));
-            pacienteRepository.save(new Paciente("María", "Gómez Torres", "76543210", "912345678", "maria.gomez@example.com"));
+            pacienteRepository
+                    .save(new Paciente("Juan", "Pérez López", "72345678", "987654321", "juan.perez@example.com"));
+            pacienteRepository
+                    .save(new Paciente("María", "Gómez Torres", "76543210", "912345678", "maria.gomez@example.com"));
         }
     }
 }

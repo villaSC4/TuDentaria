@@ -22,14 +22,12 @@ public class DoctorRestController {
         this.doctorService = doctorService;
     }
 
-    // 1. LEER TODOS (READ ALL)
     @GetMapping
     public ResponseEntity<List<Doctor>> listarTodos() {
         List<Doctor> doctores = doctorService.listarTodos();
         return ResponseEntity.ok(doctores);
     }
 
-    // 2. LEER POR ID (READ BY ID)
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         return doctorService.buscarPorId(id)
@@ -41,15 +39,13 @@ public class DoctorRestController {
                 });
     }
 
-    // 3. CREAR (CREATE)
     @PostMapping
     public ResponseEntity<Doctor> crearDoctor(@Valid @RequestBody Doctor doctor) {
-        doctor.setId(null); // Asegurar inserción
+        doctor.setId(null);
         Doctor nuevo = doctorService.guardar(doctor);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
-    // 4. ACTUALIZAR (UPDATE)
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarDoctor(@PathVariable Integer id, @Valid @RequestBody Doctor doctorDetails) {
         return doctorService.buscarPorId(id)
@@ -72,7 +68,6 @@ public class DoctorRestController {
                 });
     }
 
-    // 5. ELIMINAR (DELETE)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarDoctor(@PathVariable Integer id) {
         if (!doctorService.existePorId(id)) {
