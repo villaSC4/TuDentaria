@@ -30,9 +30,12 @@
                 <span class="ms-3"><i class="fas fa-envelope"></i> info@tudentaria.com</span>
             </div>
             <div class="social-icons">
-                <a href="https://www.instagram.com/tu.dentaria/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@tudentaria" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
-                <a href="https://wa.me/913359948" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/tu.dentaria/" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@tudentaria" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/913359948" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
@@ -59,13 +62,15 @@
 
                         <th:block sec:authorize="isAnonymous()">
                             <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                                <a th:href="@{/login}" class="btn btn-outline-dark px-3 py-2 small fw-bold rounded-1 d-block d-lg-inline-block text-center shadow-sm">
+                                <a th:href="@{/login}"
+                                    class="btn btn-outline-dark px-3 py-2 small fw-bold rounded-1 d-block d-lg-inline-block text-center shadow-sm">
                                     <i class="fas fa-sign-in-alt me-1"></i> Ingresar
                                 </a>
                             </li>
                             <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                                <a th:href="@{/registro}" class="btn btn-info text-white px-3 py-2 small fw-bold rounded-1 d-block d-lg-inline-block text-center shadow-sm"
-                                   style="background-color: #00BCD4; border-color: #00BCD4;">
+                                <a th:href="@{/registro}"
+                                    class="btn btn-info text-white px-3 py-2 small fw-bold rounded-1 d-block d-lg-inline-block text-center shadow-sm"
+                                    style="background-color: #00BCD4; border-color: #00BCD4;">
                                     <i class="fas fa-user-plus me-1"></i> Registrarse
                                 </a>
                             </li>
@@ -74,13 +79,15 @@
                         <th:block sec:authorize="isAuthenticated()">
                             <li class="nav-item dropdown ms-lg-3 mt-3 mt-lg-0">
                                 <a class="nav-link dropdown-toggle fw-bold text-dark d-flex align-items-center justify-content-between justify-content-lg-start"
-                                   href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #1f4b61 !important;">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-user-circle fa-lg me-2 text-info"></i>
-                                    <span sec:authentication="name">Usuario</span>
-                                </span>
+                                    href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" style="color: #1f4b61 !important;">
+                                    <span class="d-flex align-items-center">
+                                        <i class="fas fa-user-circle fa-lg me-2 text-info"></i>
+                                        <span sec:authentication="name">Usuario</span>
+                                    </span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-2 mt-2" aria-labelledby="userDropdown">
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-2 mt-2"
+                                    aria-labelledby="userDropdown">
                                     <li sec:authorize="hasRole('ADMIN')">
                                         <a class="dropdown-item small fw-semibold py-2" th:href="@{/admin/dashboard}">
                                             <i class="fas fa-tachometer-alt me-2 text-muted"></i>Dashboard
@@ -91,10 +98,13 @@
                                             <i class="fas fa-id-card me-2 text-muted"></i>Mi Perfil
                                         </a>
                                     </li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li>
                                         <form th:action="@{/logout}" method="POST" class="px-3 py-1">
-                                            <button type="submit" class="btn btn-sm btn-danger w-100 fw-bold text-start text-white">
+                                            <button type="submit"
+                                                class="btn btn-sm btn-danger w-100 fw-bold text-start text-white">
                                                 <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
                                             </button>
                                         </form>
@@ -108,39 +118,44 @@
         </nav>
     </header>
     <div th:if="${param.logout}" id="logout-alert" class="container mt-3">
-        <div class="alert alert-dismissible fade show border-0 shadow-sm d-flex align-items-center py-2.5 px-3" role="alert"
-             style="background-color: #def7ec; color: #03543f; border-radius: 6px; font-size: 0.9rem;">
+        <div class="alert alert-dismissible fade show border-0 shadow-sm d-flex align-items-center py-2.5 px-3"
+            role="alert" style="background-color: #def7ec; color: #03543f; border-radius: 6px; font-size: 0.9rem;">
             <i class="fas fa-check-circle fa-lg me-2"></i>
             <div>
                 Se cerró la sesión **correctamente**. ¡Vuelve pronto a TuDentaria!
             </div>
-            <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.85rem 1rem;"></button>
+            <button type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"
+                style="padding: 0.85rem 1rem;"></button>
         </div>
     </div>
-    
+
 
     <!--  CABECERA DE LA PÁGINA  -->
     <section class="page-title bg-light py-5 text-center text-md-start">
         <div class="container">
             <h1 class="fw-bold display-5 mb-2">Nosotros</h1>
             <p class="text mb-0">Inicio / Nosotros</p>
-       </div>
+        </div>
     </section>
 
     <!-- Video Nosotros -->
-    <section class="video-intro-section py-5 text-white" style="background: linear-gradient(to right bottom, #1f4b61 0%, #00a8cc 80%, #00b4d8 100%);">
+    <section class="video-intro-section py-5 text-white"
+        style="background: linear-gradient(to right bottom, #1f4b61 0%, #00a8cc 80%, #00b4d8 100%);">
         <div class="container py-4">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
                     <h3 class="fw-bold display-6 mb-4" style="color: #16324f;">Somos TuDentaria</h3>
                     <p class="fs-5 lh-base text-white">
-                        Una clínica dental moderna, especializada en diagnósticos y tratamientos avanzados de trastornos bucodentales.
-                        Garantizamos un diagnóstico integral y ofrecemos diversas formas de atención dental, procedimientos quirúrgicos y servicios de odontología cosmética.
+                        Una clínica dental moderna, especializada en diagnósticos y tratamientos avanzados de trastornos
+                        bucodentales.
+                        Garantizamos un diagnóstico integral y ofrecemos diversas formas de atención dental,
+                        procedimientos quirúrgicos y servicios de odontología cosmética.
                     </p>
                 </div>
                 <div class="col-lg-6">
                     <div class="ratio ratio-16x9 shadow rounded-3 overflow-hidden border border-white border-2">
-                        <iframe src="https://www.youtube.com/embed/UvP8Lf1NRWs?si=EDIvhnreB4IB2bBn" title="YouTube video player" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/UvP8Lf1NRWs?si=EDIvhnreB4IB2bBn"
+                            title="YouTube video player" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -150,31 +165,38 @@
     <!--  NUESTRO EQUIPO  -->
     <section class="team-section container py-5 my-3">
         <div class="text-center mb-5">
-            <span class="text-uppercase fw-bold small tracking-wider d-block mb-1" style="color: #00a8cc;">CONOCE AL EQUIPO</span>
+            <span class="text-uppercase fw-bold small tracking-wider d-block mb-1" style="color: #00a8cc;">CONOCE AL
+                EQUIPO</span>
             <h2 class="fw-bold display-6" style="color: #2c3e50;">Dentistas</h2>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <div class="col" th:each="doc : ${doctores}">
                 <div class="card h-100 border-0 shadow-sm text-center">
-                    <img th:src="${doc.imagen != null} ? @{'/uploads/' + ${doc.imagen}} : @{/img/default-doctor.jpg}"
-                         class="card-img-top img-fluid" th:alt="${doc.nombre}" style="aspect-ratio: 3/4; object-fit: cover;">
+
+                    <img th:src="${doc.imagen != null} ? @{'/uploads/' + ${doc.imagen}} : @{/img/logo.png}"
+                        onerror="this.onerror=null;this.src='/img/logo.png'" class="card-img-top img-fluid"
+                        th:alt="${doc.nombre}" style="aspect-ratio: 3/4; object-fit: cover;">
+
                     <div class="card-body px-2 py-3">
-                        <span class="small text-uppercase d-block mb-1" style="color: #00a8cc;" th:text="${doc.especialidad}">Especialidad</span>
-                        <h5 class="card-title fw-bold mb-0 style-name" style="color: #2c3e50;" th:text="${doc.nombre}">Nombre Doctor</h5>
+                        <span class="small text-uppercase d-block mb-1" style="color: #00a8cc;"
+                            th:text="${doc.especialidad}">Especialidad</span>
+                        <h5 class="card-title fw-bold mb-0 style-name" style="color: #2c3e50;" th:text="${doc.nombre}">
+                            Nombre Doctor</h5>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-        <!--  FOOTER  -->
+    <!--  FOOTER  -->
     <footer class="footer pt-5">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-md-4">
                     <img th:src="@{/img/logo.png}" alt="Tu Dentaria Logo" class="footer-logo">
-                    <p>Somos una clínica dental moderna, especializada en diagnósticos y tratamientos avanzados para profesionales de la salud.</p>
+                    <p>Somos una clínica dental moderna, especializada en diagnósticos y tratamientos avanzados para
+                        profesionales de la salud.</p>
                     <a th:href="@{/contacto}" class="btn-footer">Atención al Cliente</a>
                 </div>
                 <div class="col-md-4">
@@ -198,9 +220,12 @@
 
                     <h4 class="mt-4">Redes Sociales</h4>
                     <div class="d-flex gap-3">
-                        <a href="https://www.instagram.com/tu.dentaria/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@tudentaria" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://wa.me/913359948" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/tu.dentaria/" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@tudentaria" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-tiktok"></i></a>
+                        <a href="https://wa.me/913359948" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>

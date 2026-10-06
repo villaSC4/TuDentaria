@@ -23,14 +23,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .headers(h -> h.frameOptions(f -> f.sameOrigin()))   // necesario para la consola H2
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/scripts/**", "/img/**", "/video/**", "/favicon.ico", "/uploads/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()   // solo para comprobar datos enviados a la bd
                         .requestMatchers("/", "/nosotros", "/servicios", "/blog", "/contacto", "/solicitar-cita", "/registro", "/login", "/error/**", "/api/**").permitAll()
                         .requestMatchers("/perfil/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")

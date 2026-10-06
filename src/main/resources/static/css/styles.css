@@ -455,3 +455,37 @@ section {
         font-size: 2rem;
     }
 }
+
+/* ===== Mejoras visuales ===== */
+.navbar { backdrop-filter: blur(8px); background: rgba(255,255,255,.92) !important; }
+.navbar .nav-link { position: relative; font-weight: 600; }
+.navbar .nav-link::after {
+    content: ''; position: absolute; left: 16px; right: 16px; bottom: 2px;
+    height: 2px; background: var(--color-acento);
+    transform: scaleX(0); transition: transform .3s;
+}
+.navbar .nav-link:hover::after, .navbar .nav-link.active::after { transform: scaleX(1); }
+.navbar a.nav-link.active { background: transparent; color: var(--color-acento); }
+
+.hero h1 { text-shadow: 0 4px 20px rgba(0,0,0,.5); letter-spacing: .5px; }
+.hero-overlay { background: linear-gradient(135deg, rgba(31,75,97,.65), rgba(0,0,0,.45)); }
+
+.service-card > div, .team-section .card, .card-testimonio {
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.service-card > div:hover, .team-section .card:hover, .services-section .col-md-4 > div:first-child:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(31,75,97,.15) !important;
+}
+.team-section .card { overflow: hidden; border-radius: 12px; }
+.team-section .card img { transition: transform .5s; }
+.team-section .card:hover img { transform: scale(1.06); }
+
+.section-title { position: relative; padding-bottom: 14px; }
+.section-title::after {
+    content: ''; display: block; width: 60px; height: 3px;
+    background: var(--color-acento); margin: 12px auto 0; border-radius: 2px;
+}
+.contact-form { border-top: 4px solid var(--color-acento); }
+.btn-info, .btn-cita-celeste { box-shadow: 0 4px 12px rgba(0,188,212,.3); }
+html { scroll-behavior: smooth; }

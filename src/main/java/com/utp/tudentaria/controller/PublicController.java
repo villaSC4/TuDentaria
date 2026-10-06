@@ -1,7 +1,9 @@
 package com.utp.tudentaria.controller;
 
 import com.utp.tudentaria.model.Cita;
+import com.utp.tudentaria.model.Paciente;
 import com.utp.tudentaria.model.Usuario;
+import com.utp.tudentaria.repository.PacienteRepository;
 import com.utp.tudentaria.service.CitaService;
 import com.utp.tudentaria.service.DoctorService;
 import com.utp.tudentaria.service.UsuarioService;
@@ -21,11 +23,15 @@ public class PublicController {
     private final UsuarioService usuarioService;
     private final CitaService citaService;
     private final DoctorService doctorService;
+    private final PacienteRepository pacienteRepository; // <-- Nuevo
 
-    public PublicController(UsuarioService usuarioService, CitaService citaService, DoctorService doctorService) {
+    // Constructor actualizado
+    public PublicController(UsuarioService usuarioService, CitaService citaService, 
+                            DoctorService doctorService, PacienteRepository pacienteRepository) {
         this.usuarioService = usuarioService;
         this.citaService = citaService;
         this.doctorService = doctorService;
+        this.pacienteRepository = pacienteRepository; // <-- Nuevo
     }
 
     @GetMapping("/")
@@ -36,7 +42,7 @@ public class PublicController {
         return "index";
     }
 
-    @PostMapping("/solicitar-cita")
+@PostMapping("/solicitar-cita")
     public String procesarCita(@Valid @ModelAttribute("cita") Cita cita,
                                BindingResult result,
                                HttpServletRequest request,
@@ -55,8 +61,28 @@ public class PublicController {
             }
             return "index";
         }
+        
+        // 1. Busca si el paciente ya existe por su correo, si no, lo crea y lo guarda en la BD
+        Paciente paciente = pacienteRepository.findByEmail(cita.getEmail())
+                .orElseGet(() -> {
+                    Paciente nuevoPaciente = new Paciente(
+                            cita.getNombre(), 
+                            cita.getApellido(), 
+                            null, // DNI puede quedar nulo inicialmente
+                            cita.getTelephone(), 
+                            cita.getEmail()
+                    );
+                    return pacienteRepository.save(nuevoPaciente);
+                });
 
+        // 2. Vincula el paciente encontrado o creado a la cita actual
+        cita.setPaciente(paciente);
+        
+        // ==========================================
+
+        // 3. Finalmente, guarda la cita (ahora sí se guardará con el paciente_id)
         citaService.guardar(cita);
+        
         redirectAttributes.addFlashAttribute("exitoCita", "Tu solicitud de cita ha sido enviada con éxito. Nos comunicaremos contigo pronto.");
 
         if (esContacto) {
