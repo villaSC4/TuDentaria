@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.validation.constraints.Pattern;
+
 
 @Entity
 @Table(name = "pacientes")
@@ -23,6 +25,7 @@ public class Paciente {
     @Column(nullable = false, length = 100)
     private String apellido;
 
+    @Pattern(regexp = "\\d{8}", message = "El DNI debe tener exactamente 8 dígitos.")
     @Column(length = 20, unique = true)
     private String dni;
 
@@ -33,8 +36,7 @@ public class Paciente {
     @Column(length = 100)
     private String email;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)    @JsonIgnore
     private List<Cita> citas = new ArrayList<>();
 
     public Paciente() {}

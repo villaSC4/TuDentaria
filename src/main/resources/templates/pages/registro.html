@@ -23,15 +23,34 @@
       <p class="text-muted small">Regístrate en nuestra plataforma para gestionar tus citas</p>
     </div>
 
-    <form th:action="@{/registro}" th:object="${usuario}" method="POST" class="mt-2">
+    <form th:action="@{/registro}" th:object="${registro}" method="POST" class="mt-2">
+      <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger p-2 small text-center rounded-2 border-0 mb-3" role="alert">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+      </div>
       <div class="row g-3 mb-3">
         <div class="col-md-6">
           <label class="form-label small fw-semibold text-secondary">Nombre</label>
           <input type="text" th:field="*{nombre}" class="form-control bg-light rounded-2 py-2" placeholder="Tu nombre" required style="font-size: 0.9rem;">
+          <div class="text-danger small mt-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
         </div>
         <div class="col-md-6">
           <label class="form-label small fw-semibold text-secondary">Apellido</label>
           <input type="text" th:field="*{apellido}" class="form-control bg-light rounded-2 py-2" placeholder="Tu apellido" required style="font-size: 0.9rem;">
+          <div class="text-danger small mt-1" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold text-secondary">DNI (8 dígitos)</label>
+          <input type="text" th:field="*{dni}" maxlength="8" pattern="\d{8}" class="form-control bg-light rounded-2 py-2" placeholder="12345678" required style="font-size: 0.9rem;">
+          <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small fw-semibold text-secondary">Celular (9 dígitos)</label>
+          <input type="tel" th:field="*{telefono}" maxlength="9" pattern="\d{9}" class="form-control bg-light rounded-2 py-2" placeholder="987654321" required style="font-size: 0.9rem;">
+          <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
         </div>
       </div>
 
@@ -41,9 +60,10 @@
           <span class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"><i class="far fa-envelope"></i></span>
           <input type="email" th:field="*{email}" class="form-control bg-light border-start-0 rounded-end-2 py-2" placeholder="tu@correo.com" required style="font-size: 0.9rem;">
         </div>
+        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
       </div>
 
-      <div class="mb-4">
+      <div class="mb-3">
         <label class="form-label small fw-semibold text-secondary">Contraseña</label>
         <div class="input-group">
           <span class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"><i class="fas fa-lock"></i></span>
@@ -52,6 +72,19 @@
             <i id="regEyeIcon" class="far fa-eye"></i>
           </button>
         </div>
+        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label small fw-semibold text-secondary">Confirmar Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"><i class="fas fa-lock"></i></span>
+          <input type="password" id="regConfirmPassword" th:field="*{confirmarPassword}" class="form-control bg-light border-start-0 py-2" placeholder="Repite tu contraseña" required style="font-size: 0.9rem;">
+          <button class="input-group-text bg-light border-start-0 rounded-end-2 text-muted" type="button" onclick="togglePassword('regConfirmPassword', 'regConfirmEyeIcon')">
+            <i id="regConfirmEyeIcon" class="far fa-eye"></i>
+          </button>
+        </div>
+        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('confirmarPassword')}" th:errors="*{confirmarPassword}"></div>
       </div>
 
       <button type="submit" class="btn w-100 py-2.5 fw-bold text-white text-uppercase mb-3 rounded-2 shadow-sm" style="background-color: #00BCD4; border-color: #00BCD4; transition: 0.3s; font-size: 0.9rem; letter-spacing: 0.5px;">

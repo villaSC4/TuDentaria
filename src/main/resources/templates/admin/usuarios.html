@@ -166,9 +166,11 @@
                                 onclick="editarUsuario(this)" title="Editar Cuenta">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <a th:href="@{/admin/usuarios/eliminar/{id}(id=${u.id})}" class="btn btn-sm btn-outline-danger btn-action" onclick="return confirm('¿Seguro de eliminar este usuario?')" title="Eliminar Cuenta">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                        <form th:action="@{/admin/usuarios/eliminar/{id}(id=${u.id})}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro de eliminar este usuario?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger btn-action" title="Eliminar Cuenta">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -208,7 +210,8 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Rol del Sistema</label>
-                            <select name="idRol" id="idRol" class="form-select" required>
+                            <select th:field="*{idRol}" id="idRol" class="form-select" required>
+                                <option value="">Seleccionar rol...</option>
                                 <option th:each="r : ${rolesDisponibles}" th:value="${r.id}" th:text="${r.nombre}"></option>
                             </select>
                         </div>
@@ -235,6 +238,7 @@
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
         document.getElementById('password').required = true;
+        document.getElementById('idRol').value = '';
         document.getElementById('modalTitulo').innerHTML = '<i class="fas fa-user-plus me-2"></i>Nueva Cuenta';
     }
 

@@ -31,6 +31,10 @@
             <i class="fas fa-info-circle me-1"></i> ¡Registro exitoso! Ya puedes iniciar sesión.
         </div>
 
+        <div th:if="${param.emailCambiado}" class="alert alert-info p-2 small text-center rounded-2 border-0" role="alert" style="background-color: #e1f5fe; color: #0288d1;">
+            <i class="fas fa-info-circle me-1"></i> Tu correo electrónico ha sido actualizado. Por favor, inicia sesión con tu nuevo correo.
+        </div>
+
         <form th:action="@{/login}" method="POST" class="mt-2">
             <div class="mb-3">
                 <label class="form-label small fw-semibold text-secondary">Correo Electrónico</label>

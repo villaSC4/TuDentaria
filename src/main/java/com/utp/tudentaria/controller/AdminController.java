@@ -1,9 +1,9 @@
 package com.utp.tudentaria.controller;
 
 import com.utp.tudentaria.model.Usuario;
-import com.utp.tudentaria.repository.CitaRepository;
-import com.utp.tudentaria.repository.DoctorRepository;
-import com.utp.tudentaria.repository.UsuarioRepository;
+import com.utp.tudentaria.service.CitaService;
+import com.utp.tudentaria.service.DoctorService;
+import com.utp.tudentaria.service.UsuarioService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,37 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UsuarioRepository usuarioRepository;
-    private final CitaRepository citaRepository;
-    private final DoctorRepository doctorRepository;
+    private final UsuarioService usuarioService;
+    private final CitaService citaService;
+    private final DoctorService doctorService;
 
-    public AdminController(UsuarioRepository usuarioRepository,
-                           CitaRepository citaRepository,
-                           DoctorRepository doctorRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.citaRepository = citaRepository;
-        this.doctorRepository = doctorRepository;
+    public AdminController(UsuarioService usuarioService, CitaService citaService, DoctorService doctorService) {
+        this.usuarioService = usuarioService;
+        this.citaService = citaService;
+        this.doctorService = doctorService;
     }
 
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, Model model) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-
-        long totalUsuarios = usuarioRepository.count();
-        long totalDoctores = doctorRepository.count();
-        long citasPendientes = citaRepository.countByEstadoIgnoreCase("PENDIENTE");
-
-        String nombreAdmin = usuarioRepository.findByEmail(authentication.getName())
+        String nombreAdmin = usuarioService.buscarPorEmail(authentication.getName())
                 .map(Usuario::getNombre)
                 .orElse("Administrador");
 
         model.addAttribute("nombreAdmin", nombreAdmin);
-        model.addAttribute("totalUsuarios", totalUsuarios);
-        model.addAttribute("totalDoctores", totalDoctores);
-        model.addAttribute("citasPendientes", citasPendientes);
-
+        model.addAttribute("totalUsuarios", usuarioService.contar());
+        model.addAttribute("totalDoctores", doctorService.contar());
+        model.addAttribute("citasPendientes", citaService.contarPendientes());
         return "admin/dashboard";
     }
 }

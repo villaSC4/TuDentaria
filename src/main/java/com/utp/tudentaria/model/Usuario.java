@@ -23,13 +23,17 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paciente_id", unique = true)
+    private Paciente paciente;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private Set<Rol> roles = new HashSet<>();
+    private Set<Rol> roles = new HashSet<>();;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -43,4 +47,7 @@ public class Usuario {
     public void setPassword(String password) { this.password = password; }
     public Set<Rol> getRoles() { return roles; }
     public void setRoles(Set<Rol> roles) { this.roles = roles; }
+
+    public Paciente getPaciente() { return paciente; }
+    public void setPaciente(Paciente paciente) { this.paciente = paciente; }
 }

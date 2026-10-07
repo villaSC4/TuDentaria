@@ -141,7 +141,8 @@
               </div>
               <div>
                 <span class="fw-bold text-dark d-block" th:text="${c.nombre + ' ' + c.apellido}">Nombre Paciente</span>
-                <span th:if="${c.notas != null and !c.notas.isEmpty()}" class="badge bg-light text-muted border small" style="font-size: 0.68rem;">
+                <span th:if="${c.paciente != null and c.paciente.dni != null}" class="badge bg-light text-secondary border small" style="font-size: 0.68rem;" th:text="'DNI: ' + ${c.paciente.dni}">DNI</span>
+                <span th:if="${c.notas != null and !c.notas.isEmpty()}" class="badge bg-light text-muted border small ms-1" style="font-size: 0.68rem;">
                   <i class="fas fa-sticky-note me-1"></i> Con notas
                 </span>
               </div>
@@ -155,19 +156,29 @@
           </td>
           <td>
             <span class="badge bg-light text-dark border fw-medium px-2.5 py-1.5" th:text="${c.motivo}">Limpieza Dental</span>
+            <div th:if="${c.tratamiento != null}" class="small text-muted mt-1">
+              <i class="fas fa-tooth me-1 text-info"></i><span th:text="${c.tratamiento.nombre}"></span>
+            </div>
+            <div th:if="${c.doctor != null}" class="small text-muted">
+              <i class="fas fa-user-md me-1 text-secondary"></i><span th:text="${c.doctor.nombre}"></span>
+            </div>
           </td>
           <td>
             <div class="fw-semibold text-dark">
               <i class="far fa-calendar-alt me-1 text-info"></i>
               <span th:text="${c.fecha}">2026-08-20</span>
+              <span th:if="${c.hora != null}" class="badge bg-info-subtle text-info-emphasis ms-1" th:text="${c.hora}">08:00</span>
             </div>
           </td>
           <td>
-            <span th:if="${c.estado == 'PENDIENTE'}" class="badge-status badge-pending">
+            <span th:if="${c.estado != null and c.estado.name() == 'PENDIENTE'}" class="badge-status badge-pending">
               <i class="fas fa-hourglass-half"></i> PENDIENTE
             </span>
-            <span th:if="${c.estado == 'ATENDIDO'}" class="badge-status badge-attended">
-              <i class="fas fa-check-double"></i> ATENDIDO
+            <span th:if="${c.estado != null and c.estado.name() == 'ACEPTADA'}" class="badge-status badge-attended">
+              <i class="fas fa-check-circle"></i> ACEPTADA
+            </span>
+            <span th:if="${c.estado != null and c.estado.name() == 'CANCELADA'}" class="badge-status bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 rounded small fw-semibold">
+              <i class="fas fa-times-circle"></i> CANCELADA
             </span>
           </td>
           <td class="text-end">
@@ -176,9 +187,11 @@
                     onclick="abrirGestion(this)" title="Gestionar Cita">
               <i class="fas fa-edit"></i>
             </button>
-            <a th:href="@{/admin/citas/eliminar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-danger btn-action" onclick="return confirm('¿Estás seguro de eliminar esta solicitud de cita?')" title="Eliminar Cita">
-              <i class="fas fa-trash-alt"></i>
-            </a>
+            <form th:action="@{/admin/citas/eliminar/{id}(id=${c.id})}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar esta solicitud de cita?')">
+              <button type="submit" class="btn btn-sm btn-outline-danger btn-action" title="Eliminar Cita">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </form>
           </td>
         </tr>
         </tbody>
@@ -203,7 +216,8 @@
             <label class="form-label">Estado de la Cita</label>
             <select name="estado" id="citaEstado" class="form-select" required>
               <option value="PENDIENTE">PENDIENTE (En espera)</option>
-              <option value="ATENDIDO">ATENDIDO (Completada)</option>
+              <option value="ACEPTADA">ACEPTADA (Confirmada)</option>
+              <option value="CANCELADA">CANCELADA</option>
             </select>
           </div>
           <div class="mb-3">

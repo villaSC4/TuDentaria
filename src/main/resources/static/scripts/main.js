@@ -1,10 +1,9 @@
 const hamburguesa = document.querySelector('.menu-hamburguesa');
 const navMenu = document.querySelector('.nav-menu');
 
-// Evento de clic para el botón hamburguesa
-hamburguesa.addEventListener('click', () => {
-    navMenu.classList.toggle('active'); 
-});
+if (hamburguesa && navMenu) {
+    hamburguesa.addEventListener('click', () => navMenu.classList.toggle('active'));
+}
 
 const scrollUpBtn = document.querySelector('.scroll-up');
 

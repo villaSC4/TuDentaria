@@ -1,84 +1,63 @@
 package com.utp.tudentaria.controller;
 
-import com.utp.tudentaria.model.Rol;
-import com.utp.tudentaria.model.Usuario;
-import com.utp.tudentaria.repository.RolRepository;
-import com.utp.tudentaria.repository.UsuarioRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.utp.tudentaria.dto.UsuarioAdminForm;
+import com.utp.tudentaria.exception.NegocioException;
+import com.utp.tudentaria.service.UsuarioService;
+import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.HashSet;
 
 @Controller
 @RequestMapping("/admin/usuarios")
 public class AdminUsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
-    private final RolRepository rolRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UsuarioService usuarioService;
 
-    public AdminUsuarioController(UsuarioRepository usuarioRepository,
-                                  RolRepository rolRepository,
-                                  PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
-        this.rolRepository = rolRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AdminUsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
     public String listarUsuarios(Model model) {
-        model.addAttribute("usuarios", usuarioRepository.findAll());
-        model.addAttribute("rolesDisponibles", rolRepository.findAll());
+        model.addAttribute("usuarios", usuarioService.listar());
+        model.addAttribute("rolesDisponibles", usuarioService.listarRoles());
         if (!model.containsAttribute("usuario")) {
-            model.addAttribute("usuario", new Usuario());
+            model.addAttribute("usuario", new UsuarioAdminForm());
         }
         return "admin/usuarios";
     }
 
     @PostMapping("/guardar")
-    public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario,
-                                 @RequestParam("idRol") Integer idRol,
+    public String guardarUsuario(@Valid @ModelAttribute("usuario") UsuarioAdminForm form,
+                                 BindingResult result,
                                  RedirectAttributes redirectAttributes) {
-
-        if (usuario.getId() == null) {
-            if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
-                redirectAttributes.addFlashAttribute("error", "El correo ya está registrado.");
-                redirectAttributes.addFlashAttribute("usuario", usuario);
-                return "redirect:/admin/usuarios";
-            }
-            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        } else {
-            Usuario existente = usuarioRepository.findById(usuario.getId()).orElse(null);
-            if (existente != null) {
-                if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
-                    usuario.setPassword(existente.getPassword());
-                } else {
-                    usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-                }
-            }
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("error", result.getAllErrors().get(0).getDefaultMessage());
+            return "redirect:/admin/usuarios";
         }
-
-        Rol rolSeleccionado = rolRepository.findById(idRol).orElse(null);
-        if (rolSeleccionado != null) {
-            HashSet<Rol> roles = new HashSet<>();
-            roles.add(rolSeleccionado);
-            usuario.setRoles(roles);
+        try {
+            usuarioService.guardarDesdeAdmin(form);
+            redirectAttributes.addFlashAttribute("exito", "Usuario guardado correctamente.");
+        } catch (NegocioException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
-        usuarioRepository.save(usuario);
-        redirectAttributes.addFlashAttribute("exito", "Usuario guardado correctamente.");
         return "redirect:/admin/usuarios";
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminarUsuario(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/eliminar/{id}")
+    public String eliminarUsuario(@PathVariable("id") Integer id,
+                                  Authentication authentication,
+                                  RedirectAttributes redirectAttributes) {
         try {
-            usuarioRepository.deleteById(id);
+            usuarioService.eliminar(id, authentication.getName());
             redirectAttributes.addFlashAttribute("exito", "Usuario eliminado con éxito.");
-        } catch (Exception e) {
+        } catch (NegocioException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar este usuario.");
         }
         return "redirect:/admin/usuarios";

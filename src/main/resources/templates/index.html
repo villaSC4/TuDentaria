@@ -19,6 +19,7 @@
 
     <!-- CSS Personalizado usando Thymeleaf -->
     <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
 </head>
 
 <body>
@@ -283,8 +284,8 @@
                 <div class="p-4 w-100 bg-body-tertiary border-0 shadow-sm" style="min-height: 520px; border-radius: 8px;">
                     <div class="mb-4 border border-dark overflow-hidden mx-auto" style="max-width: 90%;">
                         <!-- CORREGIDO: Imagen Rehabilitación -->
-                        <img th:src="@{/img/rehabilitacion.jpg}" class="img-fluid w-100" alt="Rehabilitación"
-                             style="aspect-ratio: 4 / 5; object-fit: cover;">
+                        <img th:src="@{/img/rehabilitacion(2).png}" class="img-fluid w-100" alt="Rehabilitación"
+                             style="aspect-ratio: 3 / 5; object-fit: cover;">
                     </div>
                     <h5 class="fw-bold mb-2">Rehabilitación Dental</h5>
                     <p class="text-muted px-2" style="font-size: 0.85rem;">
@@ -303,8 +304,8 @@
             <div class="col-md-4 text-center d-flex flex-column align-items-center">
                 <div class="p-4 w-100 bg-body-tertiary border-0 shadow-sm" style="min-height: 520px; border-radius: 8px;">
                     <div class="mb-4 border border-dark overflow-hidden mx-auto" style="max-width: 90%;">
-                        <img th:src="@{/img/periodoncia.jpg}" class="img-fluid w-100" alt="Periodoncia"
-                             style="aspect-ratio: 4 / 5; object-fit: cover;">
+                        <img th:src="@{/img/periodoncia(2).png}" class="img-fluid w-100" alt="Periodoncia"
+                             style="aspect-ratio: 3 / 5; object-fit: cover;">
                     </div>
                     <h5 class="fw-bold mb-2">Periodoncia</h5>
                     <p class="text-muted px-2" style="font-size: 0.85rem;">
@@ -325,7 +326,7 @@
                     <div class="mb-4 border border-dark overflow-hidden mx-auto" style="max-width: 90%;">
                         <!-- CORREGIDO: Imagen Cirugía Dental -->
                         <img th:src="@{/img/cirugia-dental.jpg}" class="img-fluid w-100" alt="Cirugía Dental"
-                             style="aspect-ratio: 4 / 5; object-fit: cover;">
+                             style="aspect-ratio: 3 / 5; object-fit: cover;">
                     </div>
                     <h5 class="fw-bold mb-2">Cirugía Dental</h5>
                     <p class="text-muted px-2" style="font-size: 0.85rem;">
@@ -510,75 +511,37 @@
         </div>
     </section>
 
-    <!--  FORMULARIO DE CONTACTO -->
-    <section class="contacto py-5" id="contacto">
-        <div class="container">
-            <div class="section-header text-center mb-5">
-                <h2 class="fw-bold">SOLICITUD DE CITAS</h2>
-            </div>
-
+    <!--  SECCIÓN LLAMADO A LA ACCIÓN (AGENDA TU CITA) -->
+    <section class="cta-cita py-5 text-white position-relative overflow-hidden" id="contacto"
+             style="background: linear-gradient(135deg, #1f4b61 0%, #16324f 100%);">
+        <div class="container py-4 text-center">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-
-                    <!-- Alertas de Éxito o Error General -->
-                    <div th:if="${exitoCita}" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle me-2"></i> <span th:text="${exitoCita}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <span class="badge px-3 py-2 text-uppercase mb-3 fw-bold rounded-pill"
+                          style="background-color: rgba(0, 188, 212, 0.2); color: #00BCD4; letter-spacing: 1.5px; font-size: 0.8rem;">
+                        <i class="fas fa-calendar-check me-1"></i> ATENCIÓN PROFESIONAL Y PERSONALIZADA
+                    </span>
+                    <h2 class="display-6 fw-bold mb-3 text-white">¿Listo para transformar tu sonrisa?</h2>
+                    <p class="lead text-light opacity-75 mb-4 mx-auto" style="max-width: 650px; font-size: 1.05rem;">
+                        Agenda tu cita con nuestro equipo de especialistas. Puedes seleccionar tu doctor de preferencia, tipo de tratamiento dental y el horario que mejor se acomode a ti.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                        <a th:href="@{/contacto}" class="btn btn-info text-white px-5 py-3 fw-bold text-uppercase rounded-1 shadow"
+                           style="background-color: #00BCD4; border-color: #00BCD4; letter-spacing: 1px; font-size: 0.95rem; transition: 0.3s;"
+                           onmouseover="this.style.backgroundColor='#0097a7'; this.style.borderColor='#0097a7'"
+                           onmouseout="this.style.backgroundColor='#00BCD4'; this.style.borderColor='#00BCD4'">
+                            <i class="fas fa-calendar-alt me-2"></i> Solicitar Cita Online
+                        </a>
+                        <a href="https://wa.me/913359948" target="_blank" rel="noopener noreferrer"
+                           class="btn btn-outline-light px-4 py-3 fw-bold text-uppercase rounded-1"
+                           style="letter-spacing: 1px; font-size: 0.95rem;">
+                            <i class="fab fa-whatsapp me-2 text-success"></i> Escríbenos por WhatsApp
+                        </a>
                     </div>
-                    <div th:if="${errorCita}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle me-2"></i> <span th:text="${errorCita}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <div class="mt-4 pt-2 text-white-50 small d-flex flex-wrap justify-content-center gap-4">
+                        <span><i class="fas fa-clock text-info me-1"></i> Lun - Vie: 8:00 - 18:00 | Sáb: 9:00 - 13:00</span>
+                        <span><i class="fas fa-phone-alt text-info me-1"></i> Urgencias: 913 359 948</span>
                     </div>
-
-                    <form th:action="@{/solicitar-cita}" th:object="${cita}" method="POST" class="contact-form bg-white p-4 p-md-5 shadow-sm" style="border-radius: 8px;">
-                        <div class="row g-4">
-
-                            <div class="col-md-6 form-group">
-                                <input type="text" th:field="*{nombre}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Nombre" style="font-size: 0.9rem;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <input type="text" th:field="*{apellido}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Apellido" style="font-size: 0.9rem;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <input type="tel" th:field="*{telephone}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Número de Teléfono" style="font-size: 0.9rem;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <input type="email" th:field="*{email}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="E-mail" style="font-size: 0.9rem;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <input type="text" th:field="*{motivo}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Motivo de tu visita" style="font-size: 0.9rem;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <input type="date" th:field="*{fecha}" class="form-control rounded-1 border-secondary-subtle py-2.5" style="font-size: 0.9rem; color: #6c757d;">
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
-                            </div>
-
-                            <div class="col-12 form-group">
-                                <textarea th:field="*{notas}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Notas para el doctor" rows="6" style="font-size: 0.9rem; resize: none;"></textarea>
-                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('notas')}" th:errors="*{notas}"></div>
-                            </div>
-
-                            <div class="col-12 text-center mt-4">
-                                <button type="submit" class="btn btn-outline-dark px-5 py-2.5 fw-bold rounded-1 btn-form text-uppercase"
-                                        style="transition: 0.3s; letter-spacing: 1px; font-size: 0.9rem;"
-                                        onmouseover="this.style.backgroundColor='#00BCD4'; this.style.borderColor='#00BCD4'; this.style.color='white'"
-                                        onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#212529'; this.style.color='#212529'">
-                                    SOLICITAR CITA
-                                </button>
-                            </div>
-
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

@@ -53,25 +53,38 @@
 
         <h5 class="fw-bold mb-3 text-uppercase small tracking-wide text-secondary"><i class="fas fa-user-edit me-2"></i>Editar Datos Personales</h5>
 
-        <form th:action="@{/perfil/actualizar}" th:object="${usuario}" method="POST">
-          <input type="hidden" th:field="*{id}">
-
+        <form th:action="@{/perfil/actualizar}" th:object="${perfil}" method="POST">
           <div class="row g-3 mb-3">
             <div class="col-md-6">
               <label class="form-label small fw-semibold text-muted">Nombre</label>
               <input type="text" th:field="*{nombre}" class="form-control bg-light rounded-2 py-2" required style="font-size: 0.9rem;">
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
             </div>
             <div class="col-md-6">
               <label class="form-label small fw-semibold text-muted">Apellido</label>
               <input type="text" th:field="*{apellido}" class="form-control bg-light rounded-2 py-2" required style="font-size: 0.9rem;">
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
             </div>
           </div>
 
-          <div class="mb-4">
-            <label class="form-label small fw-semibold text-muted">Correo Electrónico</label>
-            <div class="input-group">
-              <span class="input-group-text bg-light border-end-0 text-muted"><i class="far fa-envelope"></i></span>
-              <input type="email" th:field="*{email}" class="form-control bg-light border-start-0 rounded-end-2 py-2" required style="font-size: 0.9rem;">
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted">Correo Electrónico</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 text-muted"><i class="far fa-envelope"></i></span>
+                <input type="email" th:field="*{email}" class="form-control bg-light border-start-0 rounded-end-2 py-2" required style="font-size: 0.9rem;">
+              </div>
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+              <div class="form-text small text-muted">Si cambias tu correo, deberás volver a iniciar sesión.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted">Teléfono Celular (9 dígitos)</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-phone"></i></span>
+                <input type="tel" th:field="*{telefono}" maxlength="9" pattern="^$|\d{9}" class="form-control bg-light border-start-0 rounded-end-2 py-2" placeholder="987654321" style="font-size: 0.9rem;">
+              </div>
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
             </div>
           </div>
 

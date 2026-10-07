@@ -152,13 +152,16 @@
           </td>
           <td class="text-end">
             <button class="btn btn-sm btn-outline-warning btn-action me-1"
-                    th:data-id="${d.id}" th:data-nombre="${d.nombre}" th:data-especialidad="${d.especialidad}"
+                    th:data-id="${d.id}" th:data-nombre="${d.nombre}"
+                    th:data-especialidad-id="${d.especialidadObj != null ? d.especialidadObj.id : ''}"
                     onclick="editarDoctor(this)" title="Editar Doctor">
               <i class="fas fa-edit"></i>
             </button>
-            <a th:href="@{/admin/doctores/eliminar/{id}(id=${d.id})}" class="btn btn-sm btn-outline-danger btn-action" onclick="return confirm('¿Eliminar a este doctor del plantel?')" title="Eliminar Doctor">
-              <i class="fas fa-trash-alt"></i>
-            </a>
+            <form th:action="@{/admin/doctores/eliminar/{id}(id=${d.id})}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar a este doctor del plantel?')">
+              <button type="submit" class="btn btn-sm btn-outline-danger btn-action" title="Eliminar Doctor">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </form>
           </td>
         </tr>
         </tbody>
@@ -186,12 +189,15 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Especialidad Clínica</label>
-            <input type="text" th:field="*{especialidad}" id="docEspecialidad" class="form-control" placeholder="Ej. Implantología y Rehabilitación Oral" required>
+            <select name="especialidadId" id="docEspecialidad" class="form-select" required>
+              <option value="">Selecciona una especialidad...</option>
+              <option th:each="esp : ${especialidades}" th:value="${esp.id}" th:text="${esp.nombre}"></option>
+            </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Fotografía de Perfil (JPG, PNG)</label>
             <input type="file" name="file" id="docFile" class="form-control" accept="image/*">
-            <div class="form-text small text-muted">Recomendado: Imagen cuadrada de alta resolución.</div>
+            <div class="form-text small text-muted">Recomendado: Imagen cuadrada de alta resolución. Obligatoria para nuevos doctores.</div>
           </div>
         </div>
         <div class="modal-footer">
@@ -223,7 +229,7 @@
   function editarDoctor(btn) {
       document.getElementById('docId').value = btn.getAttribute('data-id');
       document.getElementById('docNombre').value = btn.getAttribute('data-nombre');
-      document.getElementById('docEspecialidad').value = btn.getAttribute('data-especialidad');
+      document.getElementById('docEspecialidad').value = btn.getAttribute('data-especialidad-id') || '';
       document.getElementById('docFile').value = '';
       document.getElementById('docFile').required = false;
       document.getElementById('modalTitulo').innerHTML = '<i class="fas fa-user-edit me-2"></i>Editar Especialista';

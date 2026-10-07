@@ -21,7 +21,7 @@ public class Especialidad {
     @Column(length = 255)
     private String descripcion;
 
-    @OneToMany(mappedBy = "especialidadObj", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "especialidadObj", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Doctor> doctores = new ArrayList<>();
 

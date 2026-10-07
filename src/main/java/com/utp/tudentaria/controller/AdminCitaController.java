@@ -1,6 +1,7 @@
 package com.utp.tudentaria.controller;
 
-import com.utp.tudentaria.model.Cita;
+import com.utp.tudentaria.exception.NegocioException;
+import com.utp.tudentaria.model.EstadoCita;
 import com.utp.tudentaria.service.CitaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,27 +26,25 @@ public class AdminCitaController {
 
     @PostMapping("/actualizar")
     public String actualizarCita(@RequestParam("id") Integer id,
-                                 @RequestParam("estado") String estado,
+                                 @RequestParam("estado") EstadoCita estado,
                                  @RequestParam(value = "notas", required = false) String notas,
                                  RedirectAttributes redirectAttributes) {
-        Cita cita = citaService.buscarPorId(id).orElse(null);
-        if (cita != null) {
-            cita.setEstado(estado);
-            cita.setNotas(notas);
-            citaService.guardar(cita);
+        try {
+            citaService.actualizarEstado(id, estado, notas);
             redirectAttributes.addFlashAttribute("exito", "Cita actualizada correctamente.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "No se encontró la cita especificada.");
+        } catch (NegocioException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/admin/citas";
     }
 
-    @GetMapping("/eliminar/{id}")
+    /** Se borra con POST: un enlace GET podría dispararlo un tercero o un rastreador. */
+    @PostMapping("/eliminar/{id}")
     public String eliminarCita(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
             citaService.eliminarPorId(id);
             redirectAttributes.addFlashAttribute("exito", "Cita eliminada con éxito.");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo eliminar la cita.");
         }
         return "redirect:/admin/citas";

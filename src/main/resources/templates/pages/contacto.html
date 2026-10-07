@@ -147,41 +147,91 @@
             </div>
 
             <!-- Formulario Vinculado a la misma acción de guardar -->
-            <form th:action="@{/solicitar-cita}" th:object="${cita}" method="POST" class="contact-form bg-white p-4 p-md-5 shadow-sm" style="border-radius: 8px;">
+            <form th:action="@{/solicitar-cita}" th:object="${solicitud}" method="POST" class="contact-form bg-white p-4 p-md-5 shadow-sm" style="border-radius: 8px;">
+                <input type="hidden" name="origen" value="contacto">
                 <div class="row g-4">
 
                     <div class="col-md-6 form-group">
+                        <label class="form-label small fw-semibold text-muted">Nombre</label>
                         <input type="text" th:field="*{nombre}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Nombre" style="font-size: 0.9rem;">
                         <div class="text-danger small mt-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
                     </div>
 
                     <div class="col-md-6 form-group">
+                        <label class="form-label small fw-semibold text-muted">Apellido</label>
                         <input type="text" th:field="*{apellido}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Apellido" style="font-size: 0.9rem;">
                         <div class="text-danger small mt-1" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <input type="tel" th:field="*{telephone}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Número de Teléfono" style="font-size: 0.9rem;">
-                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
+                        <label class="form-label small fw-semibold text-muted">DNI (8 dígitos)</label>
+                        <input type="text" th:field="*{dni}" maxlength="8" pattern="\d{8}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Ej. 12345678" style="font-size: 0.9rem;">
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <input type="email" th:field="*{email}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="E-mail" style="font-size: 0.9rem;">
+                        <label class="form-label small fw-semibold text-muted">Teléfono Celular (9 dígitos)</label>
+                        <input type="tel" th:field="*{telefono}" maxlength="9" pattern="\d{9}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Ej. 987654321" style="font-size: 0.9rem;">
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <label class="form-label small fw-semibold text-muted">Correo Electrónico</label>
+                        <input type="email" th:field="*{email}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="tu@correo.com" style="font-size: 0.9rem;">
                         <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <input type="text" th:field="*{motivo}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Motivo de tu visita" style="font-size: 0.9rem;">
-                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></div>
+                        <label class="form-label small fw-semibold text-muted">Especialista (Opcional)</label>
+                        <select th:field="*{doctorId}" class="form-select rounded-1 border-secondary-subtle py-2.5" style="font-size: 0.9rem;">
+                            <option value="">Cualquier especialista disponible</option>
+                            <option th:each="doc : ${doctores}" th:value="${doc.id}" th:text="${doc.nombre + (doc.especialidad != null ? ' - ' + doc.especialidad : '')}"></option>
+                        </select>
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></div>
                     </div>
 
                     <div class="col-md-6 form-group">
+                        <label class="form-label small fw-semibold text-muted">Tratamiento (Opcional)</label>
+                        <select th:field="*{tratamientoId}" class="form-select rounded-1 border-secondary-subtle py-2.5" style="font-size: 0.9rem;">
+                            <option value="">Seleccionar tratamiento dental</option>
+                            <option th:each="trat : ${tratamientos}" th:value="${trat.id}" th:text="${trat.nombre}"></option>
+                        </select>
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('tratamientoId')}" th:errors="*{tratamientoId}"></div>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label class="form-label small fw-semibold text-muted">Fecha de Cita</label>
                         <input type="date" th:field="*{fecha}" class="form-control rounded-1 border-secondary-subtle py-2.5" style="font-size: 0.9rem; color: #6c757d;">
                         <div class="text-danger small mt-1" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
                     </div>
 
+                    <div class="col-md-6 form-group">
+                        <label class="form-label small fw-semibold text-muted">Hora (Citas en punto)</label>
+                        <select th:field="*{hora}" class="form-select rounded-1 border-secondary-subtle py-2.5" style="font-size: 0.9rem;">
+                            <option value="">Selecciona hora</option>
+                            <option value="08:00">08:00 AM (L-V)</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">01:00 PM (L-V)</option>
+                            <option value="14:00">02:00 PM (L-V)</option>
+                            <option value="15:00">03:00 PM (L-V)</option>
+                            <option value="16:00">04:00 PM (L-V)</option>
+                            <option value="17:00">05:00 PM (L-V)</option>
+                        </select>
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('hora')}" th:errors="*{hora}"></div>
+                    </div>
+
                     <div class="col-12 form-group">
-                        <textarea th:field="*{notas}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Notas para el doctor" rows="6" style="font-size: 0.9rem; resize: none;"></textarea>
+                        <label class="form-label small fw-semibold text-muted">Motivo de tu consulta</label>
+                        <input type="text" th:field="*{motivo}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Ej. Dolor de muela, revisión general, profilaxis" style="font-size: 0.9rem;">
+                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></div>
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label class="form-label small fw-semibold text-muted">Notas adicionales para el doctor</label>
+                        <textarea th:field="*{notas}" class="form-control rounded-1 border-secondary-subtle py-2.5" placeholder="Notas o detalles adicionales para el doctor..." rows="4" style="font-size: 0.9rem; resize: none;"></textarea>
                         <div class="text-danger small mt-1" th:if="${#fields.hasErrors('notas')}" th:errors="*{notas}"></div>
                     </div>
 
@@ -267,11 +317,11 @@
                 <div class="col-md-4">
                     <h4>Nuestros Servicios</h4>
                     <ul class="list-unstyled">
-                        <li><a href="servicios.html#servicios">Periodoncia</a></li>
-                        <li><a href="servicios.html#servicios">Cirugía Dental</a></li>
-                        <li><a href="servicios.html#servicios">Implantes dentales</a></li>
-                        <li><a href="servicios.html#servicios">Estética Dental</a></li>
-                        <li><a href="servicios.html#servicios">Ortodoncia</a></li>
+                        <li><a th:href="@{/servicios}">Periodoncia</a></li>
+                        <li><a th:href="@{/servicios}">Cirugía Dental</a></li>
+                        <li><a th:href="@{/servicios}">Implantes dentales</a></li>
+                        <li><a th:href="@{/servicios}">Estética Dental</a></li>
+                        <li><a th:href="@{/servicios}">Ortodoncia</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">

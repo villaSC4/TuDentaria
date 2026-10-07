@@ -10,4 +10,5 @@ public interface DoctorService {
     Doctor guardar(Doctor doctor);
     void eliminarPorId(Integer id);
     boolean existePorId(Integer id);
+    long contar();
 }

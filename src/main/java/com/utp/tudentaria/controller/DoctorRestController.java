@@ -42,6 +42,7 @@ public class DoctorRestController {
     @PostMapping
     public ResponseEntity<Doctor> crearDoctor(@Valid @RequestBody Doctor doctor) {
         doctor.setId(null);
+        doctor.setEspecialidadObj(null);
         Doctor nuevo = doctorService.guardar(doctor);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
@@ -50,13 +51,16 @@ public class DoctorRestController {
     public ResponseEntity<?> actualizarDoctor(@PathVariable Integer id, @Valid @RequestBody Doctor doctorDetails) {
         return doctorService.buscarPorId(id)
                 .<ResponseEntity<?>>map(existente -> {
-                    existente.setNombre(doctorDetails.getNombre());
+                     existente.setNombre(doctorDetails.getNombre());
+                    // Si el texto ya no coincide con la especialidad enlazada, se suelta el enlace
+                    // para que texto y relación nunca se contradigan.
+                    if (existente.getEspecialidadObj() != null
+                            && !existente.getEspecialidadObj().getNombre().equals(doctorDetails.getEspecialidad())) {
+                        existente.setEspecialidadObj(null);
+                    }
                     existente.setEspecialidad(doctorDetails.getEspecialidad());
                     if (doctorDetails.getImagen() != null) {
                         existente.setImagen(doctorDetails.getImagen());
-                    }
-                    if (doctorDetails.getEspecialidadObj() != null) {
-                        existente.setEspecialidadObj(doctorDetails.getEspecialidadObj());
                     }
                     Doctor actualizado = doctorService.guardar(existente);
                     return ResponseEntity.ok(actualizado);

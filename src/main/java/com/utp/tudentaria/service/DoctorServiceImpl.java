@@ -32,6 +32,10 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Doctor guardar(Doctor doctor) {
+        // La relación con Especialidad manda: el texto se deriva de ella para que nunca se contradigan.
+        if (doctor.getEspecialidadObj() != null && doctor.getEspecialidadObj().getNombre() != null) {
+            doctor.setEspecialidad(doctor.getEspecialidadObj().getNombre());
+        }
         return doctorRepository.save(doctor);
     }
 
@@ -44,5 +48,11 @@ public class DoctorServiceImpl implements DoctorService {
     @Transactional(readOnly = true)
     public boolean existePorId(Integer id) {
         return doctorRepository.existsById(id);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public long contar() {
+        return doctorRepository.count();
     }
 }
