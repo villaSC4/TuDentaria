@@ -1,7 +1,9 @@
 package com.utp.tudentaria.controller;
 
 import com.utp.tudentaria.model.Doctor;
+import com.utp.tudentaria.model.Especialidad;
 import com.utp.tudentaria.service.DoctorService;
+import com.utp.tudentaria.repository.EspecialidadRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,11 @@ import java.util.Map;
 public class DoctorRestController {
 
     private final DoctorService doctorService;
+    private final EspecialidadRepository especialidadRepository;
 
-    public DoctorRestController(DoctorService doctorService) {
+    public DoctorRestController(DoctorService doctorService, EspecialidadRepository especialidadRepository) {
         this.doctorService = doctorService;
+        this.especialidadRepository = especialidadRepository;
     }
 
     @GetMapping
@@ -42,7 +46,10 @@ public class DoctorRestController {
     @PostMapping
     public ResponseEntity<Doctor> crearDoctor(@Valid @RequestBody Doctor doctor) {
         doctor.setId(null);
-        doctor.setEspecialidadObj(null);
+        if (doctor.getEspecialidadObj() != null && doctor.getEspecialidadObj().getId() != null) {
+            Especialidad esp = especialidadRepository.findById(doctor.getEspecialidadObj().getId()).orElse(null);
+            doctor.setEspecialidadObj(esp);
+        }
         Doctor nuevo = doctorService.guardar(doctor);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
@@ -51,16 +58,14 @@ public class DoctorRestController {
     public ResponseEntity<?> actualizarDoctor(@PathVariable Integer id, @Valid @RequestBody Doctor doctorDetails) {
         return doctorService.buscarPorId(id)
                 .<ResponseEntity<?>>map(existente -> {
-                     existente.setNombre(doctorDetails.getNombre());
-                    // Si el texto ya no coincide con la especialidad enlazada, se suelta el enlace
-                    // para que texto y relación nunca se contradigan.
-                    if (existente.getEspecialidadObj() != null
-                            && !existente.getEspecialidadObj().getNombre().equals(doctorDetails.getEspecialidad())) {
-                        existente.setEspecialidadObj(null);
-                    }
+                    existente.setNombre(doctorDetails.getNombre());
                     existente.setEspecialidad(doctorDetails.getEspecialidad());
                     if (doctorDetails.getImagen() != null) {
                         existente.setImagen(doctorDetails.getImagen());
+                    }
+                    if (doctorDetails.getEspecialidadObj() != null && doctorDetails.getEspecialidadObj().getId() != null) {
+                        Especialidad esp = especialidadRepository.findById(doctorDetails.getEspecialidadObj().getId()).orElse(null);
+                        existente.setEspecialidadObj(esp);
                     }
                     Doctor actualizado = doctorService.guardar(existente);
                     return ResponseEntity.ok(actualizado);
