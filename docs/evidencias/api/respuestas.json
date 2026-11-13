@@ -1,0 +1,683 @@
+[
+  {
+    "method": "POST",
+    "path": "/api/auth/login",
+    "status": 200,
+    "request": {
+      "email": "admin@tudentaria.com",
+      "password": "[omitido]"
+    },
+    "response": {
+      "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0dWRlbnRhcmlhIiwic3ViIjoiYWRtaW5AdHVkZW50YXJpYS5jb20iLCJleHAiOjE3OTQ0NTU5MjMsImlhdCI6MTc5NDQ1MjMyMywicm9sZXMiOlsiUk9MRV9BRE1JTiJdfQ.[firma omitida]",
+      "usuario": {
+        "id": 1,
+        "nombre": "Admin",
+        "apellido": "TuDentaria",
+        "email": "admin@tudentaria.com",
+        "dni": "",
+        "telefono": "",
+        "roles": [
+          "ROLE_ADMIN"
+        ],
+        "idRol": 1
+      },
+      "expiresIn": 3600,
+      "tokenType": "Bearer",
+      "jwtDecodificado": {
+        "iss": "tudentaria",
+        "sub": "admin@tudentaria.com",
+        "exp": 1794455923,
+        "iat": 1794452323,
+        "roles": [
+          "ROLE_ADMIN"
+        ]
+      }
+    },
+    "fecha": "2026-11-11T21:58:43.196944-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/auth/login",
+    "status": 401,
+    "request": {
+      "email": "noexiste@example.com",
+      "password": "[omitido]"
+    },
+    "response": {
+      "mensaje": "Correo o contraseña incorrectos."
+    },
+    "fecha": "2026-11-11T21:58:43.293818-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/auth/registro",
+    "status": 201,
+    "request": {
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "dni": "94452323",
+      "telefono": "987654321",
+      "email": "api94452323@example.com",
+      "password": "[omitido]",
+      "confirmarPassword": "[omitido]"
+    },
+    "response": {
+      "id": 3,
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "email": "api94452323@example.com",
+      "dni": "94452323",
+      "telefono": "987654321",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "idRol": 2
+    },
+    "fecha": "2026-11-11T21:58:43.390522-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/auth/login",
+    "status": 200,
+    "request": {
+      "email": "api94452323@example.com",
+      "password": "[omitido]"
+    },
+    "response": {
+      "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0dWRlbnRhcmlhIiwic3ViIjoiYXBpOTQ0NTIzMjNAZXhhbXBsZS5jb20iLCJleHAiOjE3OTQ0NTU5MjMsImlhdCI6MTc5NDQ1MjMyMywicm9sZXMiOlsiUk9MRV9VU0VSIl19.[firma omitida]",
+      "usuario": {
+        "id": 3,
+        "nombre": "Paciente",
+        "apellido": "Evidencia API",
+        "email": "api94452323@example.com",
+        "dni": "94452323",
+        "telefono": "987654321",
+        "roles": [
+          "ROLE_USER"
+        ],
+        "idRol": 2
+      },
+      "expiresIn": 3600,
+      "tokenType": "Bearer",
+      "jwtDecodificado": {
+        "iss": "tudentaria",
+        "sub": "api94452323@example.com",
+        "exp": 1794455923,
+        "iat": 1794452323,
+        "roles": [
+          "ROLE_USER"
+        ]
+      }
+    },
+    "fecha": "2026-11-11T21:58:43.486499-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/perfil",
+    "status": 200,
+    "request": {},
+    "response": {
+      "id": 3,
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "email": "api94452323@example.com",
+      "dni": "94452323",
+      "telefono": "987654321",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "idRol": 2
+    },
+    "fecha": "2026-11-11T21:58:43.490573-05:00"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/perfil",
+    "status": 200,
+    "request": {
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "email": "api94452323@example.com",
+      "telefono": "987654321"
+    },
+    "response": {
+      "mensaje": "Perfil actualizado.",
+      "requiereLogin": false
+    },
+    "fecha": "2026-11-11T21:58:43.497726-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/resumen",
+    "status": 403,
+    "request": {},
+    "response": "",
+    "fecha": "2026-11-11T21:58:43.500196-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/usuarios",
+    "status": 401,
+    "request": {},
+    "response": "",
+    "fecha": "2026-11-11T21:58:43.501194-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/doctores",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 1,
+        "nombre": "Dra. Raquel Villa",
+        "especialidad": "Ortodoncia y Cirugía",
+        "especialidadObj": {
+          "id": 1,
+          "nombre": "Ortodoncia y Cirugía",
+          "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+        },
+        "imagen": "demo-doctor-1.jpg"
+      },
+      {
+        "id": 2,
+        "nombre": "Dr. Carlos Mendoza",
+        "especialidad": "Implantología y Estética",
+        "especialidadObj": {
+          "id": 2,
+          "nombre": "Implantología y Estética",
+          "descripcion": "Reemplazo de piezas dentales perdidas y diseño de sonrisas."
+        },
+        "imagen": "demo-doctor-2.jpg"
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.503590-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/tratamientos",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 1,
+        "nombre": "Limpieza Dental Profunda (Profilaxis)",
+        "descripcion": "Eliminación de sarro, placa bacteriana y pulido dental.",
+        "precio": 80.0,
+        "duracionMinutos": 45
+      },
+      {
+        "id": 2,
+        "nombre": "Blanqueamiento Dental Láser",
+        "descripcion": "Aclaramiento dental seguro de alta efectividad estética.",
+        "precio": 250.0,
+        "duracionMinutos": 60
+      },
+      {
+        "id": 3,
+        "nombre": "Ortodoncia con Brackets Metálicos",
+        "descripcion": "Alineación dental integral de arco completo.",
+        "precio": 1500.0,
+        "duracionMinutos": 60
+      },
+      {
+        "id": 4,
+        "nombre": "Implante Dental de Titanio",
+        "descripcion": "Rehabilitación fija con perno de titanio biocompatible.",
+        "precio": 2200.0,
+        "duracionMinutos": 90
+      },
+      {
+        "id": 5,
+        "nombre": "Tratamiento de prueba UI",
+        "descripcion": "Validación de integración con Angular",
+        "precio": 120.0,
+        "duracionMinutos": 30
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.505862-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/especialidades",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 1,
+        "nombre": "Ortodoncia y Cirugía",
+        "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+      },
+      {
+        "id": 2,
+        "nombre": "Implantología y Estética",
+        "descripcion": "Reemplazo de piezas dentales perdidas y diseño de sonrisas."
+      },
+      {
+        "id": 3,
+        "nombre": "Endodoncia Avanzada",
+        "descripcion": "Tratamiento especializado de conductos radiculares."
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.508229-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/doctores",
+    "status": 201,
+    "request": {
+      "nombre": "Doctor temporal API",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1
+      }
+    },
+    "response": {
+      "id": 3,
+      "nombre": "Doctor temporal API",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1,
+        "nombre": "Ortodoncia y Cirugía",
+        "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+      },
+      "imagen": null
+    },
+    "fecha": "2026-11-11T21:58:43.514434-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/doctores/3",
+    "status": 200,
+    "request": {},
+    "response": {
+      "id": 3,
+      "nombre": "Doctor temporal API",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1,
+        "nombre": "Ortodoncia y Cirugía",
+        "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+      },
+      "imagen": null
+    },
+    "fecha": "2026-11-11T21:58:43.517044-05:00"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/doctores/3",
+    "status": 200,
+    "request": {
+      "nombre": "Doctor API editado",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1
+      }
+    },
+    "response": {
+      "id": 3,
+      "nombre": "Doctor API editado",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1,
+        "nombre": "Ortodoncia y Cirugía",
+        "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+      },
+      "imagen": null
+    },
+    "fecha": "2026-11-11T21:58:43.521602-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/doctores/3/foto",
+    "status": 200,
+    "request": "[multipart: imagen de prueba]",
+    "response": {
+      "id": 3,
+      "nombre": "Doctor API editado",
+      "especialidad": "Ortodoncia y Cirugía",
+      "especialidadObj": {
+        "id": 1,
+        "nombre": "Ortodoncia y Cirugía",
+        "descripcion": "Corrección de dientes y mandíbulas alineadas incorrectamente."
+      },
+      "imagen": "f5421dc0-f73c-421d-8325-b4cdfe9b0b71.png"
+    },
+    "fecha": "2026-11-11T21:58:43.539698-05:00"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/doctores/3",
+    "status": 200,
+    "request": {},
+    "response": {
+      "mensaje": "Doctor eliminado exitosamente",
+      "id": 3
+    },
+    "fecha": "2026-11-11T21:58:43.569378-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/tratamientos",
+    "status": 201,
+    "request": {
+      "nombre": "Tratamiento temporal API",
+      "descripcion": "Evidencia de integración",
+      "precio": 90,
+      "duracionMinutos": 30
+    },
+    "response": {
+      "id": 6,
+      "nombre": "Tratamiento temporal API",
+      "descripcion": "Evidencia de integración",
+      "precio": 90,
+      "duracionMinutos": 30
+    },
+    "fecha": "2026-11-11T21:58:43.577302-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/tratamientos/6",
+    "status": 200,
+    "request": {},
+    "response": {
+      "id": 6,
+      "nombre": "Tratamiento temporal API",
+      "descripcion": "Evidencia de integración",
+      "precio": 90.0,
+      "duracionMinutos": 30
+    },
+    "fecha": "2026-11-11T21:58:43.580281-05:00"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/tratamientos/6",
+    "status": 200,
+    "request": {
+      "nombre": "Tratamiento API editado",
+      "descripcion": "Evidencia de integración",
+      "precio": 95.5,
+      "duracionMinutos": 45
+    },
+    "response": {
+      "id": 6,
+      "nombre": "Tratamiento API editado",
+      "descripcion": "Evidencia de integración",
+      "precio": 95.5,
+      "duracionMinutos": 45
+    },
+    "fecha": "2026-11-11T21:58:43.584781-05:00"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/tratamientos/6",
+    "status": 200,
+    "request": {},
+    "response": {
+      "mensaje": "Tratamiento eliminado exitosamente",
+      "id": 6
+    },
+    "fecha": "2026-11-11T21:58:43.590754-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/citas",
+    "status": 201,
+    "request": {
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "dni": "94452323",
+      "telefono": "987654321",
+      "email": "api94452323@example.com",
+      "fecha": "2026-11-16",
+      "hora": "11:00",
+      "motivo": "Solicitud de prueba API"
+    },
+    "response": {
+      "id": 2,
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "email": "api94452323@example.com",
+      "telefono": "987654321",
+      "fecha": "2026-11-16",
+      "hora": "11:00:00",
+      "motivo": "Solicitud de prueba API",
+      "notas": null,
+      "estado": "PENDIENTE",
+      "doctor": "Por asignar",
+      "tratamiento": "Evaluación"
+    },
+    "fecha": "2026-11-11T21:58:43.596720-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/citas/mias",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 2,
+        "nombre": "Paciente",
+        "apellido": "Evidencia API",
+        "email": "api94452323@example.com",
+        "telefono": "987654321",
+        "fecha": "2026-11-16",
+        "hora": "11:00:00",
+        "motivo": "Solicitud de prueba API",
+        "notas": null,
+        "estado": "PENDIENTE",
+        "doctor": "Por asignar",
+        "tratamiento": "Evaluación"
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.601017-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/citas",
+    "status": 400,
+    "request": {},
+    "response": {
+      "mensaje": "Datos inválidos.",
+      "errores": {
+        "hora": "Elige una hora.",
+        "dni": "El DNI es obligatorio.",
+        "telefono": "El número de teléfono es obligatorio.",
+        "apellido": "El apellido es obligatorio.",
+        "fecha": "Elige una fecha.",
+        "email": "El correo electrónico es obligatorio.",
+        "nombre": "El nombre es obligatorio.",
+        "motivo": "El motivo de la visita es obligatorio."
+      }
+    },
+    "fecha": "2026-11-11T21:58:43.606393-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/resumen",
+    "status": 200,
+    "request": {},
+    "response": {
+      "usuarios": 3,
+      "doctores": 2,
+      "citas": 2,
+      "pendientes": 2
+    },
+    "fecha": "2026-11-11T21:58:43.611975-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/usuarios",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 1,
+        "nombre": "Admin",
+        "apellido": "TuDentaria",
+        "email": "admin@tudentaria.com",
+        "dni": "",
+        "telefono": "",
+        "roles": [
+          "ROLE_ADMIN"
+        ],
+        "idRol": 1
+      },
+      {
+        "id": 2,
+        "nombre": "Paciente",
+        "apellido": "Prueba Angular",
+        "email": "paciente.angular@example.com",
+        "dni": "87654321",
+        "telefono": "987654321",
+        "roles": [
+          "ROLE_USER"
+        ],
+        "idRol": 2
+      },
+      {
+        "id": 3,
+        "nombre": "Paciente",
+        "apellido": "Evidencia API",
+        "email": "api94452323@example.com",
+        "dni": "94452323",
+        "telefono": "987654321",
+        "roles": [
+          "ROLE_USER"
+        ],
+        "idRol": 2
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.616775-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/roles",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 1,
+        "nombre": "ROLE_ADMIN"
+      },
+      {
+        "id": 2,
+        "nombre": "ROLE_USER"
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.620946-05:00"
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/usuarios",
+    "status": 201,
+    "request": {
+      "nombre": "Usuario",
+      "apellido": "Gestionado",
+      "email": "gestion94452323@example.com",
+      "password": "[omitido]",
+      "idRol": 2
+    },
+    "response": {
+      "mensaje": "Usuario creado."
+    },
+    "fecha": "2026-11-11T21:58:43.721792-05:00"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/admin/usuarios/4",
+    "status": 200,
+    "request": {
+      "nombre": "Usuario Editado",
+      "apellido": "Gestionado",
+      "email": "gestion94452323@example.com",
+      "password": "[omitido]",
+      "idRol": 2
+    },
+    "response": {
+      "mensaje": "Usuario actualizado."
+    },
+    "fecha": "2026-11-11T21:58:43.734263-05:00"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/usuarios/4",
+    "status": 200,
+    "request": {},
+    "response": {
+      "mensaje": "Usuario eliminado."
+    },
+    "fecha": "2026-11-11T21:58:43.738764-05:00"
+  },
+  {
+    "method": "GET",
+    "path": "/api/admin/citas",
+    "status": 200,
+    "request": {},
+    "response": [
+      {
+        "id": 2,
+        "nombre": "Paciente",
+        "apellido": "Evidencia API",
+        "email": "api94452323@example.com",
+        "telefono": "987654321",
+        "fecha": "2026-11-16",
+        "hora": "11:00:00",
+        "motivo": "Solicitud de prueba API",
+        "notas": null,
+        "estado": "PENDIENTE",
+        "doctor": "Por asignar",
+        "tratamiento": "Evaluación"
+      },
+      {
+        "id": 1,
+        "nombre": "Paciente",
+        "apellido": "Prueba Angular",
+        "email": "paciente.angular@example.com",
+        "telefono": "987654321",
+        "fecha": "2026-11-13",
+        "hora": "10:00:00",
+        "motivo": "Evaluación de prueba de la migración",
+        "notas": "",
+        "estado": "PENDIENTE",
+        "doctor": "Dra. Raquel Villa",
+        "tratamiento": "Evaluación"
+      }
+    ],
+    "fecha": "2026-11-11T21:58:43.743735-05:00"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/admin/citas/2",
+    "status": 200,
+    "request": {
+      "estado": "ACEPTADA",
+      "notas": "Confirmación de prueba"
+    },
+    "response": {
+      "id": 2,
+      "nombre": "Paciente",
+      "apellido": "Evidencia API",
+      "email": "api94452323@example.com",
+      "telefono": "987654321",
+      "fecha": "2026-11-16",
+      "hora": "11:00:00",
+      "motivo": "Solicitud de prueba API",
+      "notas": "Confirmación de prueba",
+      "estado": "ACEPTADA",
+      "doctor": "Por asignar",
+      "tratamiento": "Evaluación"
+    },
+    "fecha": "2026-11-11T21:58:43.752503-05:00"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/admin/citas/2",
+    "status": 200,
+    "request": {},
+    "response": {
+      "mensaje": "Cita eliminada."
+    },
+    "fecha": "2026-11-11T21:58:43.756670-05:00"
+  }
+]

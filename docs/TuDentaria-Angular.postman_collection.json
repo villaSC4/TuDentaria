@@ -1,0 +1,635 @@
+{
+  "info": {
+    "name": "TuDentaria Angular JWT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Peticiones de referencia. Ajustar IDs de los registros creados antes de ejecutar PUT/DELETE. Las peticiones 401/403 son ejemplos de errores: eliminar/cambiar el token para reproducirlos. No ejecutar la colección completa contra una base real."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8081"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": "Admin123!"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 POST /api/auth/login (evidencia 200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@tudentaria.com\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) { pm.collectionVariables.set(\"token\", pm.response.json().accessToken); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 POST /api/auth/login (evidencia 401)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"noexiste@example.com\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 POST /api/auth/registro (evidencia 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/registro",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Paciente\",\n  \"apellido\": \"Evidencia API\",\n  \"dni\": \"94452323\",\n  \"telefono\": \"987654321\",\n  \"email\": \"api94452323@example.com\",\n  \"password\": \"{{password}}\",\n  \"confirmarPassword\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "04 POST /api/auth/login (evidencia 200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"api94452323@example.com\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) { pm.collectionVariables.set(\"token\", pm.response.json().accessToken); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 GET /api/perfil (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/perfil"
+      }
+    },
+    {
+      "name": "06 PUT /api/perfil (evidencia 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/perfil",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Paciente\",\n  \"apellido\": \"Evidencia API\",\n  \"email\": \"api94452323@example.com\",\n  \"telefono\": \"987654321\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07 GET /api/admin/resumen (evidencia 403)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/resumen"
+      }
+    },
+    {
+      "name": "08 GET /api/admin/usuarios (evidencia 401)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/usuarios"
+      }
+    },
+    {
+      "name": "09 GET /api/doctores (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/doctores"
+      }
+    },
+    {
+      "name": "10 GET /api/tratamientos (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/tratamientos"
+      }
+    },
+    {
+      "name": "11 GET /api/especialidades (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/especialidades"
+      }
+    },
+    {
+      "name": "12 POST /api/doctores (evidencia 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/doctores",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Doctor temporal API\",\n  \"especialidad\": \"Ortodoncia y Cirugía\",\n  \"especialidadObj\": {\n    \"id\": 1\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "13 GET /api/doctores/3 (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/doctores/3"
+      }
+    },
+    {
+      "name": "14 PUT /api/doctores/3 (evidencia 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/doctores/3",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Doctor API editado\",\n  \"especialidad\": \"Ortodoncia y Cirugía\",\n  \"especialidadObj\": {\n    \"id\": 1\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "15 POST /api/admin/doctores/3/foto (evidencia 200)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/doctores/3/foto",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "16 DELETE /api/doctores/3 (evidencia 200)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/doctores/3"
+      }
+    },
+    {
+      "name": "17 POST /api/tratamientos (evidencia 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tratamientos",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Tratamiento temporal API\",\n  \"descripcion\": \"Evidencia de integración\",\n  \"precio\": 90,\n  \"duracionMinutos\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "18 GET /api/tratamientos/6 (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/tratamientos/6"
+      }
+    },
+    {
+      "name": "19 PUT /api/tratamientos/6 (evidencia 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tratamientos/6",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Tratamiento API editado\",\n  \"descripcion\": \"Evidencia de integración\",\n  \"precio\": 95.5,\n  \"duracionMinutos\": 45\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "20 DELETE /api/tratamientos/6 (evidencia 200)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/tratamientos/6"
+      }
+    },
+    {
+      "name": "21 POST /api/citas (evidencia 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/citas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Paciente\",\n  \"apellido\": \"Evidencia API\",\n  \"dni\": \"94452323\",\n  \"telefono\": \"987654321\",\n  \"email\": \"api94452323@example.com\",\n  \"fecha\": \"2026-11-16\",\n  \"hora\": \"11:00\",\n  \"motivo\": \"Solicitud de prueba API\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "22 GET /api/citas/mias (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/citas/mias"
+      }
+    },
+    {
+      "name": "23 POST /api/citas (evidencia 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/citas"
+      }
+    },
+    {
+      "name": "24 GET /api/admin/resumen (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/resumen"
+      }
+    },
+    {
+      "name": "25 GET /api/admin/usuarios (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/usuarios"
+      }
+    },
+    {
+      "name": "26 GET /api/admin/roles (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/roles"
+      }
+    },
+    {
+      "name": "27 POST /api/admin/usuarios (evidencia 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/usuarios",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Usuario\",\n  \"apellido\": \"Gestionado\",\n  \"email\": \"gestion94452323@example.com\",\n  \"password\": \"{{password}}\",\n  \"idRol\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "28 PUT /api/admin/usuarios/4 (evidencia 200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/usuarios/4",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Usuario Editado\",\n  \"apellido\": \"Gestionado\",\n  \"email\": \"gestion94452323@example.com\",\n  \"password\": \"{{password}}\",\n  \"idRol\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "29 DELETE /api/admin/usuarios/4 (evidencia 200)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/usuarios/4"
+      }
+    },
+    {
+      "name": "30 GET /api/admin/citas (evidencia 200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/citas"
+      }
+    },
+    {
+      "name": "31 PATCH /api/admin/citas/2 (evidencia 200)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/citas/2",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"ACEPTADA\",\n  \"notas\": \"Confirmación de prueba\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "32 DELETE /api/admin/citas/2 (evidencia 200)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/citas/2"
+      }
+    }
+  ]
+}

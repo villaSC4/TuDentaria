@@ -12,6 +12,7 @@ public class Doctor {
     private Integer id;
 
     @NotBlank(message = "El nombre del doctor es obligatorio.")
+    @jakarta.validation.constraints.Size(max=100)
     private String nombre;
 
     @NotBlank(message = "La especialidad es obligatoria.")

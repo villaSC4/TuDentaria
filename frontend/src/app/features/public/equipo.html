@@ -1,0 +1,4 @@
+<section class="container py-5"><h2 class="text-center mb-4">Nuestro equipo de especialistas</h2>
+@if(error()) { <div class="alert alert-danger" role="alert">{{error()}} <button class="btn btn-sm btn-outline-danger" (click)="cargar()">Reintentar</button></div> }
+@if(cargando()) { <p role="status">Cargando especialistas…</p> }
+<div class="row g-4">@for(doc of doctores();track doc.id) { <div class="col-md-6 col-lg-4"><article class="card h-100"><img class="doctor-photo" [src]="foto(doc)" [alt]="doc.nombre" (error)="fallback($event)"><div class="card-body"><h3 class="h5">{{doc.nombre}}</h3><p>{{doc.especialidad}}</p><a class="btn btn-brand" routerLink="/contacto">Solicitar cita</a></div></article></div> } @empty { @if(!cargando() && !error()) { <p>Pronto publicaremos nuestro equipo.</p> } }</div></section>
