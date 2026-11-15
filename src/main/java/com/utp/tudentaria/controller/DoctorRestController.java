@@ -3,6 +3,7 @@ package com.utp.tudentaria.controller;
 import com.utp.tudentaria.model.Doctor;
 import com.utp.tudentaria.model.Especialidad;
 import com.utp.tudentaria.service.DoctorService;
+import com.utp.tudentaria.service.UploadFileService;
 import com.utp.tudentaria.repository.EspecialidadRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctores")
-@CrossOrigin(origins = "*")
 public class DoctorRestController {
 
     private final DoctorService doctorService;
     private final EspecialidadRepository especialidadRepository;
 
-    public DoctorRestController(DoctorService doctorService, EspecialidadRepository especialidadRepository) {
+    private final UploadFileService uploads;
+
+    public DoctorRestController(DoctorService doctorService, EspecialidadRepository especialidadRepository, UploadFileService uploads) {
+        this.uploads = uploads;
         this.doctorService = doctorService;
         this.especialidadRepository = especialidadRepository;
     }
@@ -84,7 +87,9 @@ public class DoctorRestController {
             error.put("mensaje", "No se puede eliminar. Doctor no encontrado con ID: " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
+        Doctor eliminado = doctorService.buscarPorId(id).orElse(null);
         doctorService.eliminarPorId(id);
+        if (eliminado != null) uploads.eliminarImagen(eliminado.getImagen());
         Map<String, Object> respuesta = new HashMap<>();
         respuesta.put("mensaje", "Doctor eliminado exitosamente");
         respuesta.put("id", id);

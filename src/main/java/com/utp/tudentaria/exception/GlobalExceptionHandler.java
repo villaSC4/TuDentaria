@@ -33,7 +33,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NegocioException.class)
     public ResponseEntity<Map<String, Object>> negocio(NegocioException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(cuerpo(ex.getMessage()));
+        Map<String, Object> body = cuerpo(ex.getMessage());
+        if (ex.getCampo() != null) body.put("errores", Map.of(ex.getCampo(), ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

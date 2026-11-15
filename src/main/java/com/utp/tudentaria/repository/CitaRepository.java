@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface CitaRepository extends JpaRepository<Cita, Integer> {
 
+    List<Cita> findByPacienteIdOrderByFechaDescHoraDesc(Integer pacienteId);
+
     long countByEstado(EstadoCita estado);
 
     List<Cita> findByEmail(String email);

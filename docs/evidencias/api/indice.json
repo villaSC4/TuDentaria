@@ -1,0 +1,130 @@
+[
+  {
+    "url": "01-post-api-auth-login.html",
+    "captura": "01-post-api-auth-login.jpg"
+  },
+  {
+    "url": "02-post-api-auth-login.html",
+    "captura": "02-post-api-auth-login.jpg"
+  },
+  {
+    "url": "03-post-api-auth-registro.html",
+    "captura": "03-post-api-auth-registro.jpg"
+  },
+  {
+    "url": "04-post-api-auth-login.html",
+    "captura": "04-post-api-auth-login.jpg"
+  },
+  {
+    "url": "05-get-api-perfil.html",
+    "captura": "05-get-api-perfil.jpg"
+  },
+  {
+    "url": "06-put-api-perfil.html",
+    "captura": "06-put-api-perfil.jpg"
+  },
+  {
+    "url": "07-get-api-admin-resumen.html",
+    "captura": "07-get-api-admin-resumen.jpg"
+  },
+  {
+    "url": "08-get-api-admin-usuarios.html",
+    "captura": "08-get-api-admin-usuarios.jpg"
+  },
+  {
+    "url": "09-get-api-doctores.html",
+    "captura": "09-get-api-doctores.jpg"
+  },
+  {
+    "url": "10-get-api-tratamientos.html",
+    "captura": "10-get-api-tratamientos.jpg"
+  },
+  {
+    "url": "11-get-api-especialidades.html",
+    "captura": "11-get-api-especialidades.jpg"
+  },
+  {
+    "url": "12-post-api-doctores.html",
+    "captura": "12-post-api-doctores.jpg"
+  },
+  {
+    "url": "13-get-api-doctores-3.html",
+    "captura": "13-get-api-doctores-3.jpg"
+  },
+  {
+    "url": "14-put-api-doctores-3.html",
+    "captura": "14-put-api-doctores-3.jpg"
+  },
+  {
+    "url": "15-post-api-admin-doctores-3-foto.html",
+    "captura": "15-post-api-admin-doctores-3-foto.jpg"
+  },
+  {
+    "url": "16-delete-api-doctores-3.html",
+    "captura": "16-delete-api-doctores-3.jpg"
+  },
+  {
+    "url": "17-post-api-tratamientos.html",
+    "captura": "17-post-api-tratamientos.jpg"
+  },
+  {
+    "url": "18-get-api-tratamientos-6.html",
+    "captura": "18-get-api-tratamientos-6.jpg"
+  },
+  {
+    "url": "19-put-api-tratamientos-6.html",
+    "captura": "19-put-api-tratamientos-6.jpg"
+  },
+  {
+    "url": "20-delete-api-tratamientos-6.html",
+    "captura": "20-delete-api-tratamientos-6.jpg"
+  },
+  {
+    "url": "21-post-api-citas.html",
+    "captura": "21-post-api-citas.jpg"
+  },
+  {
+    "url": "22-get-api-citas-mias.html",
+    "captura": "22-get-api-citas-mias.jpg"
+  },
+  {
+    "url": "23-post-api-citas.html",
+    "captura": "23-post-api-citas.jpg"
+  },
+  {
+    "url": "24-get-api-admin-resumen.html",
+    "captura": "24-get-api-admin-resumen.jpg"
+  },
+  {
+    "url": "25-get-api-admin-usuarios.html",
+    "captura": "25-get-api-admin-usuarios.jpg"
+  },
+  {
+    "url": "26-get-api-admin-roles.html",
+    "captura": "26-get-api-admin-roles.jpg"
+  },
+  {
+    "url": "27-post-api-admin-usuarios.html",
+    "captura": "27-post-api-admin-usuarios.jpg"
+  },
+  {
+    "url": "28-put-api-admin-usuarios-4.html",
+    "captura": "28-put-api-admin-usuarios-4.jpg"
+  },
+  {
+    "url": "29-delete-api-admin-usuarios-4.html",
+    "captura": "29-delete-api-admin-usuarios-4.jpg"
+  },
+  {
+    "url": "30-get-api-admin-citas.html",
+    "captura": "30-get-api-admin-citas.jpg"
+  },
+  {
+    "url": "31-patch-api-admin-citas-2.html",
+    "captura": "31-patch-api-admin-citas-2.jpg"
+  },
+  {
+    "url": "32-delete-api-admin-citas-2.html",
+    "captura": "32-delete-api-admin-citas-2.jpg"
+  }
+]

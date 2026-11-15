@@ -1,0 +1,29 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Evidencia HTTP TuDentaria</title><style>body{font:16px system-ui;color:#183342;background:#f0f7f8;margin:0;padding:32px}article{background:white;border:1px solid #c9dfe3;border-radius:12px;padding:28px;max-width:1050px;margin:auto}h1{font-size:23px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f7f8;padding:20px;border-radius:8px;font-size:14px}small{color:#52636a}.status{color:#007b6f;font-weight:bold}a{color:#00788a}</style><article><small>TuDentaria · Ejecución real contra Spring Boot local · 2026-11-11T21:58:43.486499-05:00</small><h1>POST /api/auth/login</h1><p class="status">HTTP 200</p><h2>Petición</h2><pre>{
+  &quot;email&quot;: &quot;api94452323@example.com&quot;,
+  &quot;password&quot;: &quot;[omitido]&quot;
+}</pre><h2>Respuesta recibida</h2><pre>{
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0dWRlbnRhcmlhIiwic3ViIjoiYXBpOTQ0NTIzMjNAZXhhbXBsZS5jb20iLCJleHAiOjE3OTQ0NTU5MjMsImlhdCI6MTc5NDQ1MjMyMywicm9sZXMiOlsiUk9MRV9VU0VSIl19.[firma omitida]&quot;,
+  &quot;usuario&quot;: {
+    &quot;id&quot;: 3,
+    &quot;nombre&quot;: &quot;Paciente&quot;,
+    &quot;apellido&quot;: &quot;Evidencia API&quot;,
+    &quot;email&quot;: &quot;api94452323@example.com&quot;,
+    &quot;dni&quot;: &quot;94452323&quot;,
+    &quot;telefono&quot;: &quot;987654321&quot;,
+    &quot;roles&quot;: [
+      &quot;ROLE_USER&quot;
+    ],
+    &quot;idRol&quot;: 2
+  },
+  &quot;expiresIn&quot;: 3600,
+  &quot;tokenType&quot;: &quot;Bearer&quot;,
+  &quot;jwtDecodificado&quot;: {
+    &quot;iss&quot;: &quot;tudentaria&quot;,
+    &quot;sub&quot;: &quot;api94452323@example.com&quot;,
+    &quot;exp&quot;: 1794455923,
+    &quot;iat&quot;: 1794452323,
+    &quot;roles&quot;: [
+      &quot;ROLE_USER&quot;
+    ]
+  }
+}</pre><small>Credenciales y firma del JWT omitidas. Esta vista presenta respuestas HTTP capturadas por el script de verificación; no es una captura de Postman.</small></article></html>

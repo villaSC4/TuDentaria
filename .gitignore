@@ -34,3 +34,14 @@ build/
 ### macOS / OS ###
 .DS_Store
 Thumbs.db
+
+# Angular y configuración privada
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+.env
+.env.*
+!.env.example
+frontend/out-tsc/
+frontend/test-results/
+frontend/playwright-report/

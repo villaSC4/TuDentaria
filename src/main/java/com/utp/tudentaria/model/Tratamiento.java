@@ -19,9 +19,11 @@ public class Tratamiento {
     private Integer id;
 
     @NotBlank(message = "El nombre del tratamiento es obligatorio.")
+    @jakarta.validation.constraints.Size(max=100)
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    @jakarta.validation.constraints.Size(max=255)
     @Column(length = 255)
     private String descripcion;
 
@@ -31,6 +33,7 @@ public class Tratamiento {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
 
+    @jakarta.validation.constraints.Min(1)
     private Integer duracionMinutos;
 
     @OneToMany(mappedBy = "tratamiento", fetch = FetchType.LAZY)

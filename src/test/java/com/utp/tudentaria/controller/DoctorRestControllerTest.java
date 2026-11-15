@@ -32,6 +32,12 @@ class DoctorRestControllerTest {
     @MockBean
     private DoctorService doctorService;
 
+    @MockBean
+    private com.utp.tudentaria.repository.EspecialidadRepository especialidadRepository;
+
+    @MockBean
+    private com.utp.tudentaria.service.UploadFileService uploadFileService;
+
     @Autowired
     private ObjectMapper objectMapper;
 

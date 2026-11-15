@@ -1,3 +1,15 @@
+# TuDentaria: Spring Boot + Angular
+
+Frontend Angular agregado en `frontend/`; backend y vistas Thymeleaf originales conservados.
+
+- [Guía de ejecución y migración](docs/GUIA_MIGRACION_ANGULAR.md)
+- [Plan de desarrollo intermedio y evidencias](docs/PLAN_DE_DESARROLLO_INTERMEDIO.md)
+- [Colección Postman Angular/JWT](docs/TuDentaria-Angular.postman_collection.json)
+
+Frontend de desarrollo: `http://127.0.0.1:4200`. Consultar la guía para levantar Spring en 8081 si 8080 ya está ocupado.
+
+---
+
 # 🦷 TuDentaria
 
 > **TuDentaria** es un sistema web de gestión clínica odontológica desarrollado con Spring Boot y Bootstrap.

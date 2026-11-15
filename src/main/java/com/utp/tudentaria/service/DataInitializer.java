@@ -80,11 +80,11 @@ public class DataInitializer implements CommandLineRunner {
 
         if (seedDemo) {
             if (doctorRepository.count() == 0) {
-                Doctor doc1 = new Doctor("Dra. Raquel Villa", ortodoncia.getNombre(), "doctor-1.jpg");
+                Doctor doc1 = new Doctor("Dra. Raquel Villa", ortodoncia.getNombre(), "demo-doctor-1.jpg");
                 doc1.setEspecialidadObj(ortodoncia);
                 doctorRepository.save(doc1);
 
-                Doctor doc2 = new Doctor("Dr. Carlos Mendoza", implantologia.getNombre(), "doctor-2.jpg");
+                Doctor doc2 = new Doctor("Dr. Carlos Mendoza", implantologia.getNombre(), "demo-doctor-2.jpg");
                 doc2.setEspecialidadObj(implantologia);
                 doctorRepository.save(doc2);
             }

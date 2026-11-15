@@ -1,0 +1,4 @@
+<section class="container py-5"><h2>Tratamientos y tarifas</h2><p>Consulta las opciones disponibles y solicita tu evaluación.</p>
+@if(error()) { <div class="alert alert-danger" role="alert">{{error()}} <button class="btn btn-sm btn-outline-danger" (click)="cargar()">Reintentar</button></div> }
+@if(cargando()) { <p role="status">Cargando tratamientos…</p> }
+<div class="row g-4">@for(t of items();track t.id) { <div class="col-md-6"><article class="card h-100"><div class="card-body"><h3 class="h5">{{t.nombre}}</h3><p>{{t.descripcion}}</p><p class="fw-bold">{{t.precio | currency:'PEN':'S/ ':'1.2-2'}} · {{t.duracionMinutos}} min</p><a class="btn btn-brand" routerLink="/contacto">Solicitar cita</a></div></article></div> } @empty { @if(!cargando() && !error()) { <p>No hay tratamientos disponibles.</p> } }</div></section>
