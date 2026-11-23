@@ -9,6 +9,10 @@ npm start
 
 La aplicación se abre en <http://localhost:4200>. Iniciar también Spring Boot desde `../backend/` para que las operaciones con datos funcionen.
 
+## Si el puerto 4200 está ocupado
+
+`npm start` utiliza siempre el puerto 4200. Si ya hay una instancia, se detiene con un mensaje en lugar de seleccionar otro puerto que Spring rechazaría por CORS. Usa la instancia existente o detén su terminal con `Ctrl+C` antes de reiniciarla. Mantén el backend ejecutándose en 8080 y abre <http://127.0.0.1:4200/login>.
+
 ## Localizar el código
 
 - `src/app/features/public/`: inicio, nosotros, servicios, blog y errores.

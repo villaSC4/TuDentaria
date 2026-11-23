@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "ng serve --host 127.0.0.1 --proxy-config proxy.conf.cjs --poll 2000",
+    "start": "node scripts/start.cjs",
     "build": "ng build",
     "test:e2e": "playwright test"
   },

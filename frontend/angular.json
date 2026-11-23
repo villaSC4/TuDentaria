@@ -60,7 +60,9 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "proxyConfig": "proxy.conf.cjs"
+            "proxyConfig": "proxy.conf.cjs",
+            "host": "127.0.0.1",
+            "port": 4200
           }
         }
       }
