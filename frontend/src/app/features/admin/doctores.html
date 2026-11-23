@@ -1,2 +1,187 @@
-<h2>Doctores</h2>@if(error()){<div class="alert alert-danger" role="alert">{{error()}}</div>}@if(exito()){<div class="alert alert-success" role="status">{{exito()}}</div>}@if(cargando()){<p role="status">Cargando datos…</p>}<div class="row g-4"><div class="col-lg-5"><form class="form-card" [formGroup]="form" (ngSubmit)="guardar()" novalidate><h3 class="h5">{{editing() ? 'Editar doctor' : 'Nuevo doctor'}}</h3><label class="form-label" for="nombre">Nombre</label><input id="nombre" class="form-control" type="text" formControlName="nombre" maxlength="100"><app-field-error [control]="form.controls.nombre"/><label class="form-label" for="especialidadId">Especialidad</label><select id="especialidadId" class="form-select" formControlName="especialidadId"><option [ngValue]="null">Selecciona una especialidad</option>@for(e of especialidades();track e.id){<option [ngValue]="e.id">{{e.nombre}}</option>}</select><app-field-error [control]="form.controls.especialidadId"/>
-<label class="form-label" for="foto">Fotografía (opcional)</label><input id="foto" #foto type="file" class="form-control" accept="image/png,image/jpeg,image/webp" (change)="archivo($event)" [disabled]="enviando()"><p class="small mt-2">JPG, PNG o WEBP; máximo 5 MB.</p><app-field-error [control]="form.controls.foto"/><div class="d-flex gap-2 mt-4"><button type="submit" class="btn btn-brand" [disabled]="enviando()">{{enviando() ? 'Guardando…' : editing() ? 'Guardar cambios' : 'Crear'}}</button><button class="btn btn-outline-secondary" type="button" (click)="cancelar()">Limpiar</button></div></form></div><div class="col-lg-7"><div class="table-responsive"><table class="table"><thead><tr><th>Doctor</th><th>Especialidad</th><th>Acciones</th></tr></thead><tbody>@for(d of items();track d.id){<tr><td>{{d.nombre}}</td><td>{{d.especialidad}}</td><td><button class="btn btn-sm btn-outline-dark me-2" (click)="editar(d)">Editar</button><button class="btn btn-sm btn-outline-danger" [disabled]="enviando()" (click)="eliminar(d)">Eliminar</button></td></tr>}@empty{<tr><td colspan="3">No hay doctores.</td></tr>}</tbody></table></div></div></div>
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Equipo de Odontólogos</h2>
+    <p class="page-subtitle">
+      Gestiona los doctores que se muestran en el sitio web institucional
+    </p>
+  </div>
+  <button class="btn btn-primary-custom px-3 py-2 shadow-sm" (click)="nuevo()">
+    <i class="fas fa-plus-circle me-1"></i>Agregar Especialista
+  </button>
+</div>
+@if (error() && !modalAbierto()) {
+  <div
+    class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4 rounded-3 d-flex align-items-center"
+    role="alert"
+    style="background-color: #fde8e8; color: #e02424"
+  >
+    <i class="fas fa-exclamation-circle fa-lg me-2"></i
+    ><span>{{ error() }}</span
+    ><button
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="error.set('')"
+    ></button>
+  </div>
+}
+@if (exito()) {
+  <div
+    class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4 rounded-3 d-flex align-items-center"
+    role="status"
+    style="background-color: #def7ec; color: #03543f"
+  >
+    <i class="fas fa-check-circle fa-lg me-2"></i><span>{{ exito() }}</span
+    ><button
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="exito.set('')"
+    ></button>
+  </div>
+}
+@if (cargando()) {
+  <p class="loading-state" role="status">Cargando datos…</p>
+}
+<div class="card-table-container">
+  <div class="table-responsive">
+    <table class="table custom-table align-middle">
+      <thead>
+        <tr>
+          <th style="width: 80px">Foto</th>
+          <th>Nombre y Apellidos</th>
+          <th>Especialidad Médica</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (d of items(); track d.id) {
+          <tr>
+            <td>
+              <img
+                [src]="fotoUrl(d)"
+                (error)="imagenError($event)"
+                [alt]="d.nombre"
+                class="rounded-circle border shadow-sm"
+                style="width: 46px; height: 46px; object-fit: cover"
+              />
+            </td>
+            <td>
+              <div class="fw-bold text-dark">{{ d.nombre }}</div>
+              <div class="small text-muted">Colegiado TuDentaria</div>
+            </td>
+            <td>
+              <span
+                class="badge bg-info-subtle text-info-emphasis border border-info-subtle px-2.5 py-1.5 fw-semibold"
+                >{{ d.especialidad }}</span
+              >
+            </td>
+            <td class="text-end">
+              <button
+                class="btn btn-sm btn-outline-warning btn-action me-1"
+                (click)="editar(d)"
+                title="Editar Doctor"
+                aria-label="Editar Doctor"
+              >
+                <i class="fas fa-edit"></i></button
+              ><button
+                class="btn btn-sm btn-outline-danger btn-action"
+                [disabled]="enviando()"
+                (click)="eliminar(d)"
+                title="Eliminar Doctor"
+                aria-label="Eliminar Doctor"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="text-center py-5 text-muted">
+              <i class="fas fa-user-md fa-3x mb-3 text-secondary d-block"></i>No
+              hay especialistas registrados en el plantel médico.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-modal
+  [abierto]="modalAbierto()"
+  [titulo]="editing() ? 'Editar Especialista' : 'Agregar Especialista'"
+  icono="fas fa-user-plus"
+  [ocupado]="enviando()"
+  (cerrar)="cancelar()"
+>
+  @if (error()) {
+    <div class="alert alert-danger modal-error" role="alert">{{ error() }}</div>
+  }
+  <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="nombre" class="form-label"
+          >Nombre Completo del Especialista</label
+        ><input
+          id="nombre"
+          type="text"
+          class="form-control"
+          formControlName="nombre"
+          maxlength="100"
+          placeholder="Ej. Dr. Mario Silva"
+        /><app-field-error [control]="form.controls.nombre" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="especialidadId"
+          >Especialidad Clínica</label
+        ><select
+          id="especialidadId"
+          formControlName="especialidadId"
+          class="form-select"
+        >
+          <option [ngValue]="null">Selecciona una especialidad...</option>
+          @for (e of especialidades(); track e.id) {
+            <option [ngValue]="e.id">{{ e.nombre }}</option>
+          }</select
+        ><app-field-error [control]="form.controls.especialidadId" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="foto"
+          >Fotografía de Perfil (JPG, PNG)</label
+        ><input
+          id="foto"
+          type="file"
+          class="form-control"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="archivo($event)"
+          [disabled]="enviando()"
+        />
+        <div class="form-text small text-muted">
+          Recomendado: Imagen cuadrada de alta resolución. Obligatoria para
+          nuevos doctores.
+        </div>
+        <app-field-error [control]="form.controls.foto" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-light"
+        type="button"
+        [disabled]="enviando()"
+        (click)="cancelar()"
+      >
+        Cancelar</button
+      ><button
+        type="submit"
+        class="btn btn-primary-custom px-4"
+        [disabled]="enviando()"
+      >
+        <i class="fas fa-save me-1"></i
+        >{{
+          enviando()
+            ? "Guardando…"
+            : "Guardar
+        Doctor"
+        }}
+      </button>
+    </div>
+  </form></app-modal
+>

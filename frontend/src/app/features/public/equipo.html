@@ -1,4 +1,49 @@
-<section class="container py-5"><h2 class="text-center mb-4">Nuestro equipo de especialistas</h2>
-@if(error()) { <div class="alert alert-danger" role="alert">{{error()}} <button class="btn btn-sm btn-outline-danger" (click)="cargar()">Reintentar</button></div> }
-@if(cargando()) { <p role="status">Cargando especialistas…</p> }
-<div class="row g-4">@for(doc of doctores();track doc.id) { <div class="col-md-6 col-lg-4"><article class="card h-100"><img class="doctor-photo" [src]="foto(doc)" [alt]="doc.nombre" (error)="fallback($event)"><div class="card-body"><h3 class="h5">{{doc.nombre}}</h3><p>{{doc.especialidad}}</p><a class="btn btn-brand" routerLink="/contacto">Solicitar cita</a></div></article></div> } @empty { @if(!cargando() && !error()) { <p>Pronto publicaremos nuestro equipo.</p> } }</div></section>
+<section class="team-section container py-5 my-3">
+  <div class="text-center mb-5">
+    <span
+      class="text-uppercase fw-bold small tracking-wider d-block mb-1"
+      style="color: #00a8cc"
+      >CONOCE AL EQUIPO</span
+    >
+    <h2 class="fw-bold display-6" style="color: #2c3e50">Dentistas</h2>
+  </div>
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      {{ error() }}
+      <button class="btn btn-sm btn-outline-danger" (click)="cargar()">
+        Reintentar
+      </button>
+    </div>
+  }
+  @if (cargando()) {
+    <p role="status">Cargando especialistas…</p>
+  }
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    @for (doc of doctores(); track doc.id) {
+      <div class="col">
+        <div class="card h-100 border-0 shadow-sm text-center">
+          <img
+            [src]="foto(doc)"
+            (error)="fallback($event)"
+            class="card-img-top img-fluid"
+            [alt]="doc.nombre"
+            style="aspect-ratio: 3/4; object-fit: cover"
+          />
+          <div class="card-body px-2 py-3">
+            <span
+              class="small text-uppercase d-block mb-1"
+              style="color: #00a8cc"
+              >{{ doc.especialidad }}</span
+            >
+            <h5
+              class="card-title fw-bold mb-0 style-name"
+              style="color: #2c3e50"
+            >
+              {{ doc.nombre }}
+            </h5>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,1 +1,229 @@
-<h2>Usuarios</h2>@if(error()){<div class="alert alert-danger" role="alert">{{error()}}</div>}@if(exito()){<div class="alert alert-success" role="status">{{exito()}}</div>}@if(cargando()){<p role="status">Cargando datos…</p>}<div class="row g-4"><div class="col-lg-5"><form class="form-card" [formGroup]="form" (ngSubmit)="guardar()" novalidate><h3 class="h5">{{editing() ? 'Editar usuario' : 'Nuevo usuario'}}</h3><label class="form-label" for="nombre">Nombres</label><input id="nombre" class="form-control" type="text" formControlName="nombre" maxlength="50"><app-field-error [control]="form.controls.nombre"/><label class="form-label" for="apellido">Apellidos</label><input id="apellido" class="form-control" type="text" formControlName="apellido" maxlength="50"><app-field-error [control]="form.controls.apellido"/><label class="form-label" for="email">Correo electrónico</label><input id="email" class="form-control" type="email" formControlName="email" maxlength="150" autocomplete="off"><app-field-error [control]="form.controls.email"/><label class="form-label" for="password">Contraseña (vacía al editar: conservar)</label><input id="password" class="form-control" type="password" formControlName="password" maxlength="72" autocomplete="new-password"><app-field-error [control]="form.controls.password"/><label class="form-label" for="idRol">Rol</label><select id="idRol" class="form-select" formControlName="idRol"><option [ngValue]="null">Selecciona un rol</option>@for(r of roles();track r.id){<option [ngValue]="r.id">{{r.nombre}}</option>}</select><app-field-error [control]="form.controls.idRol"/><div class="d-flex gap-2 mt-4"><button type="submit" class="btn btn-brand" [disabled]="enviando()">{{enviando() ? 'Guardando…' : editing() ? 'Guardar cambios' : 'Crear'}}</button><button class="btn btn-outline-secondary" type="button" (click)="cancelar()">Limpiar</button></div></form></div><div class="col-lg-7"><div class="table-responsive"><table class="table"><thead><tr><th>Usuario</th><th>Rol</th><th>Acciones</th></tr></thead><tbody>@for(u of items();track u.id){<tr><td>{{u.nombre}} {{u.apellido}}<br><small>{{u.email}}</small></td><td>{{u.roles.join(', ')}}</td><td><button class="btn btn-sm btn-outline-dark me-2" (click)="editar(u)">Editar</button><button class="btn btn-sm btn-outline-danger" [disabled]="enviando() || u.id===auth.usuario()?.id" (click)="eliminar(u)">Eliminar</button></td></tr>}@empty{<tr><td colspan="3">No hay usuarios.</td></tr>}</tbody></table></div></div></div>
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Cuentas y Accesos de Usuario</h2>
+    <p class="page-subtitle">
+      Gestiona credenciales, roles de acceso y perfiles del sistema
+    </p>
+  </div>
+  <button class="btn btn-primary-custom px-3 py-2 shadow-sm" (click)="nuevo()">
+    <i class="fas fa-plus-circle me-1"></i>Nueva Cuenta
+  </button>
+</div>
+@if (error() && !modalAbierto()) {
+  <div
+    class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4 rounded-3 d-flex align-items-center"
+    role="alert"
+    style="background-color: #fde8e8; color: #e02424"
+  >
+    <i class="fas fa-exclamation-circle fa-lg me-2"></i
+    ><span>{{ error() }}</span
+    ><button
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="error.set('')"
+    ></button>
+  </div>
+}
+@if (exito()) {
+  <div
+    class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4 rounded-3 d-flex align-items-center"
+    role="status"
+    style="background-color: #def7ec; color: #03543f"
+  >
+    <i class="fas fa-check-circle fa-lg me-2"></i><span>{{ exito() }}</span
+    ><button
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="exito.set('')"
+    ></button>
+  </div>
+}
+@if (cargando()) {
+  <p class="loading-state" role="status">Cargando datos…</p>
+}
+<div class="card-table-container">
+  <div class="table-responsive">
+    <table class="table custom-table align-middle">
+      <thead>
+        <tr>
+          <th style="width: 70px">ID</th>
+          <th>Usuario</th>
+          <th>Correo Electrónico</th>
+          <th>Roles Asignados</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (u of items(); track u.id) {
+          <tr>
+            <td>
+              <span class="badge bg-light text-muted border font-monospace"
+                >#{{ u.id }}</span
+              >
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-2.5">
+                <div
+                  class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center"
+                  style="width: 38px; height: 38px; font-size: 0.85rem"
+                >
+                  <span>{{ u.nombre.slice(0, 1) }}</span>
+                </div>
+                <div>
+                  <span class="fw-bold text-dark d-block"
+                    >{{ u.nombre }} {{ u.apellido }}</span
+                  ><span class="small text-muted">{{ u.email }}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="text-secondary small font-monospace">{{
+                u.email
+              }}</span>
+            </td>
+            <td>
+              @for (rol of u.roles; track rol) {
+                <span
+                  class="badge border me-1 px-2 py-1"
+                  [class.bg-danger-subtle]="rol === 'ROLE_ADMIN'"
+                  [class.text-danger-emphasis]="rol === 'ROLE_ADMIN'"
+                  [class.border-danger-subtle]="rol === 'ROLE_ADMIN'"
+                  [class.bg-primary-subtle]="rol !== 'ROLE_ADMIN'"
+                  [class.text-primary-emphasis]="rol !== 'ROLE_ADMIN'"
+                  [class.border-primary-subtle]="rol !== 'ROLE_ADMIN'"
+                  >{{ rol }}</span
+                >
+              }
+            </td>
+            <td class="text-end">
+              <button
+                class="btn btn-sm btn-outline-warning btn-action me-1"
+                (click)="editar(u)"
+                title="Editar Cuenta"
+                aria-label="Editar Cuenta"
+              >
+                <i class="fas fa-edit"></i></button
+              ><button
+                class="btn btn-sm btn-outline-danger btn-action"
+                [disabled]="enviando() || u.id === auth.usuario()?.id"
+                (click)="eliminar(u)"
+                title="Eliminar Cuenta"
+                aria-label="Eliminar Cuenta"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="fas fa-users fa-3x mb-3 text-secondary d-block"></i>No
+              hay usuarios registrados.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-modal
+  [abierto]="modalAbierto()"
+  [titulo]="editing() ? 'Editar Cuenta' : 'Nueva Cuenta'"
+  icono="fas fa-user-plus"
+  [ocupado]="enviando()"
+  (cerrar)="cancelar()"
+>
+  @if (error()) {
+    <div class="alert alert-danger modal-error" role="alert">{{ error() }}</div>
+  }
+  <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label
+            ><input
+              id="nombre"
+              type="text"
+              class="form-control"
+              formControlName="nombre"
+              maxlength="50"
+              placeholder="Ej. Carlos"
+            /><app-field-error [control]="form.controls.nombre" />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label
+            ><input
+              id="apellido"
+              type="text"
+              class="form-control"
+              formControlName="apellido"
+              maxlength="50"
+              placeholder="Ej. Mendoza"
+            /><app-field-error [control]="form.controls.apellido" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label
+            ><input
+              id="email"
+              type="email"
+              class="form-control"
+              formControlName="email"
+              maxlength="150"
+              placeholder="carlos&#64;correo.com"
+            /><app-field-error [control]="form.controls.email" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label
+            ><input
+              id="password"
+              type="password"
+              class="form-control"
+              formControlName="password"
+              maxlength="72"
+              autocomplete="new-password"
+              placeholder="Dejar en blanco para conservar actual si editas"
+            /><app-field-error [control]="form.controls.password" />
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="idRol">Rol del Sistema</label
+          ><select id="idRol" class="form-select" formControlName="idRol">
+            <option [ngValue]="null">Seleccionar rol...</option>
+            @for (rol of roles(); track rol.id) {
+              <option [ngValue]="rol.id">{{ rol.nombre }}</option>
+            }</select
+          ><app-field-error [control]="form.controls.idRol" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-light"
+        type="button"
+        [disabled]="enviando()"
+        (click)="cancelar()"
+      >
+        Cancelar</button
+      ><button
+        type="submit"
+        class="btn btn-primary-custom px-4"
+        [disabled]="enviando()"
+      >
+        <i class="fas fa-save me-1"></i
+        >{{
+          enviando()
+            ? "Guardando…"
+            : "Guardar
+        Usuario"
+        }}
+      </button>
+    </div>
+  </form></app-modal
+>

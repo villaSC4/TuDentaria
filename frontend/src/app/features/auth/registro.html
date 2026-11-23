@@ -1,1 +1,272 @@
-<section class="container auth-page"><div class="form-card"><h1 class="h3">Crea tu cuenta</h1>@if(error()) { <div class="alert alert-danger" role="alert">{{error()}}</div> }@if(exito()) { <div class="alert alert-success" role="status">{{exito()}}</div> }<form [formGroup]="form" (ngSubmit)="guardar()" novalidate><label for="nombre" class="form-label">Nombres</label><input id="nombre" type="text" class="form-control" formControlName="nombre" autocomplete="given-name" maxlength="50" [attr.aria-invalid]="form.controls.nombre.touched && form.controls.nombre.invalid" aria-describedby="nombre-error"><app-field-error id="nombre-error" [control]="form.controls.nombre"/><label for="apellido" class="form-label">Apellidos</label><input id="apellido" type="text" class="form-control" formControlName="apellido" autocomplete="family-name" maxlength="50" [attr.aria-invalid]="form.controls.apellido.touched && form.controls.apellido.invalid" aria-describedby="apellido-error"><app-field-error id="apellido-error" [control]="form.controls.apellido"/><label for="dni" class="form-label">DNI (8 dígitos)</label><input id="dni" type="text" class="form-control" formControlName="dni" inputmode="numeric" maxlength="8" [attr.aria-invalid]="form.controls.dni.touched && form.controls.dni.invalid" aria-describedby="dni-error"><app-field-error id="dni-error" [control]="form.controls.dni"/><label for="telefono" class="form-label">Celular (9 dígitos)</label><input id="telefono" type="tel" class="form-control" formControlName="telefono" autocomplete="tel" maxlength="9" [attr.aria-invalid]="form.controls.telefono.touched && form.controls.telefono.invalid" aria-describedby="telefono-error"><app-field-error id="telefono-error" [control]="form.controls.telefono"/><label for="email" class="form-label">Correo electrónico</label><input id="email" type="email" class="form-control" formControlName="email" autocomplete="email" maxlength="150" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error"><app-field-error id="email-error" [control]="form.controls.email"/><label for="password" class="form-label">Contraseña (mínimo 6 caracteres)</label><input id="password" type="password" class="form-control" formControlName="password" autocomplete="new-password" maxlength="72" [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid" aria-describedby="password-error"><app-field-error id="password-error" [control]="form.controls.password"/><label for="confirmarPassword" class="form-label">Confirma tu contraseña</label><input id="confirmarPassword" type="password" class="form-control" formControlName="confirmarPassword" autocomplete="new-password" maxlength="72" [attr.aria-invalid]="form.controls.confirmarPassword.touched && form.controls.confirmarPassword.invalid" aria-describedby="confirmarPassword-error"><app-field-error id="confirmarPassword-error" [control]="form.controls.confirmarPassword"/>@if(form.hasError('noCoincide') && form.controls.confirmarPassword.touched){<p class="field-error" role="alert">Las contraseñas no coinciden.</p>}<button class="btn btn-brand mt-4 w-100" type="submit" [disabled]="enviando()">{{enviando() ? 'Procesando…' : 'Registrarme'}}</button></form></div></section>
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100 py-5"
+>
+  <div
+    class="card p-4 md-p-5 border-0 bg-white"
+    style="
+      max-width: 480px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    "
+  >
+    <div class="text-center mb-4">
+      <a routerLink="/">
+        <img
+          src="/img/logo.png"
+          alt="TuDentaria"
+          height="75"
+          style="object-fit: contain"
+        />
+      </a>
+      <h1
+        class="h4 fw-bold mt-4 mb-1 text-uppercase"
+        style="color: #1f4b61; letter-spacing: 1px"
+      >
+        Crear Cuenta
+      </h1>
+      <p class="text-muted small">
+        Regístrate en nuestra plataforma para gestionar tus citas
+      </p>
+    </div>
+
+    @if (error()) {
+      <div
+        class="alert alert-danger p-2 small text-center rounded-2 border-0"
+        role="alert"
+        style="background-color: #fde8e8; color: #e02424"
+      >
+        <i class="fas fa-exclamation-circle me-1"></i>{{ error() }}
+      </div>
+    }
+    @if (exito()) {
+      <div
+        class="alert alert-info p-2 small text-center rounded-2 border-0"
+        role="status"
+        style="background-color: #e1f5fe; color: #0288d1"
+      >
+        <i class="fas fa-info-circle me-1"></i>{{ exito() }}
+      </div>
+    }
+    <form
+      [formGroup]="form"
+      (ngSubmit)="guardar()"
+      novalidate
+      method="POST"
+      class="mt-2"
+    >
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label
+            for="nombre"
+            class="form-label small fw-semibold text-secondary"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            id="nombre"
+            formControlName="nombre"
+            class="form-control bg-light rounded-2 py-2"
+            placeholder="Tu nombre"
+            required
+            style="font-size: 0.9rem"
+          />
+          <app-field-error [control]="form.controls.nombre" />
+        </div>
+        <div class="col-md-6">
+          <label
+            for="apellido"
+            class="form-label small fw-semibold text-secondary"
+            >Apellido</label
+          >
+          <input
+            type="text"
+            id="apellido"
+            formControlName="apellido"
+            class="form-control bg-light rounded-2 py-2"
+            placeholder="Tu apellido"
+            required
+            style="font-size: 0.9rem"
+          />
+          <app-field-error [control]="form.controls.apellido" />
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="dni" class="form-label small fw-semibold text-secondary"
+            >DNI (8 dígitos)</label
+          >
+          <input
+            type="text"
+            id="dni"
+            formControlName="dni"
+            maxlength="8"
+            pattern="\d&#123;8&#125;"
+            class="form-control bg-light rounded-2 py-2"
+            placeholder="12345678"
+            required
+            style="font-size: 0.9rem"
+          />
+          <app-field-error [control]="form.controls.dni" />
+        </div>
+        <div class="col-md-6">
+          <label
+            for="telefono"
+            class="form-label small fw-semibold text-secondary"
+            >Celular (9 dígitos)</label
+          >
+          <input
+            type="tel"
+            id="telefono"
+            formControlName="telefono"
+            maxlength="9"
+            pattern="\d&#123;9&#125;"
+            class="form-control bg-light rounded-2 py-2"
+            placeholder="987654321"
+            required
+            style="font-size: 0.9rem"
+          />
+          <app-field-error [control]="form.controls.telefono" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label small fw-semibold text-secondary"
+          >Correo Electrónico</label
+        >
+        <div class="input-group">
+          <span
+            class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"
+            ><i class="far fa-envelope"></i
+          ></span>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control bg-light border-start-0 rounded-end-2 py-2"
+            placeholder="tu&#64;correo.com"
+            required
+            style="font-size: 0.9rem"
+          />
+        </div>
+        <app-field-error [control]="form.controls.email" />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="regPassword"
+          class="form-label small fw-semibold text-secondary"
+          >Contraseña</label
+        >
+        <div class="input-group">
+          <span
+            class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"
+            ><i class="fas fa-lock"></i
+          ></span>
+          <input
+            [type]="mostrarPassword() ? 'text' : 'password'"
+            id="regPassword"
+            formControlName="password"
+            class="form-control bg-light border-start-0 py-2"
+            placeholder="Mínimo 6 caracteres"
+            required
+            style="font-size: 0.9rem"
+          />
+          <button
+            class="input-group-text bg-light border-start-0 rounded-end-2 text-muted"
+            type="button"
+            (click)="mostrarPassword.set(!mostrarPassword())"
+            [attr.aria-label]="
+              mostrarPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'
+            "
+            [attr.aria-pressed]="mostrarPassword()"
+          >
+            <i
+              id="regEyeIcon"
+              class="far"
+              [class.fa-eye]="!mostrarPassword()"
+              [class.fa-eye-slash]="mostrarPassword()"
+            ></i>
+          </button>
+        </div>
+        <app-field-error [control]="form.controls.password" />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="regConfirmPassword"
+          class="form-label small fw-semibold text-secondary"
+          >Confirmar Contraseña</label
+        >
+        <div class="input-group">
+          <span
+            class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"
+            ><i class="fas fa-lock"></i
+          ></span>
+          <input
+            [type]="mostrarConfirmacion() ? 'text' : 'password'"
+            id="regConfirmPassword"
+            formControlName="confirmarPassword"
+            class="form-control bg-light border-start-0 py-2"
+            placeholder="Repite tu contraseña"
+            required
+            style="font-size: 0.9rem"
+          />
+          <button
+            class="input-group-text bg-light border-start-0 rounded-end-2 text-muted"
+            type="button"
+            (click)="mostrarConfirmacion.set(!mostrarConfirmacion())"
+            [attr.aria-label]="
+              mostrarConfirmacion()
+                ? 'Ocultar contraseña'
+                : 'Mostrar contraseña'
+            "
+            [attr.aria-pressed]="mostrarConfirmacion()"
+          >
+            <i
+              id="regConfirmEyeIcon"
+              class="far"
+              [class.fa-eye]="!mostrarConfirmacion()"
+              [class.fa-eye-slash]="mostrarConfirmacion()"
+            ></i>
+          </button>
+        </div>
+        <app-field-error [control]="form.controls.confirmarPassword" />
+      </div>
+
+      @if (
+        form.hasError("noCoincide") && form.controls.confirmarPassword.touched
+      ) {
+        <p class="text-danger small" role="alert">
+          Las contraseñas no coinciden.
+        </p>
+      }
+      <button
+        type="submit"
+        aria-label="Registrarme"
+        [disabled]="enviando()"
+        class="btn w-100 py-2.5 fw-bold text-white text-uppercase mb-3 rounded-2 shadow-sm"
+        style="
+          background-color: #00bcd4;
+          border-color: #00bcd4;
+          transition: 0.3s;
+          font-size: 0.9rem;
+          letter-spacing: 0.5px;
+        "
+      >
+        <i class="fas fa-user-plus me-2"></i> Registrarme
+      </button>
+
+      <div class="text-center mt-3 border-top pt-3">
+        <span class="small text-muted">¿Ya tienes una cuenta creada? </span>
+        <a
+          routerLink="/login"
+          class="small fw-bold text-decoration-none"
+          style="color: #1f4b61"
+          >Inicia sesión aquí</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

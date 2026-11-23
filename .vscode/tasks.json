@@ -7,7 +7,8 @@
             "command": "./mvnw",
             "args": [
                 "spring-boot:run",
-                "-Dspring-boot.run.profiles=local"
+                "-Dspring-boot.run.profiles=local",
+                "-Dspring-boot.run.arguments=--server.port=8080"
             ],
             "options": {
                 "cwd": "${workspaceFolder}/backend"
@@ -25,7 +26,10 @@
                 "start"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/frontend"
+                "cwd": "${workspaceFolder}/frontend",
+                "env": {
+                    "API_TARGET": "http://127.0.0.1:8080"
+                }
             },
             "problemMatcher": []
         },
