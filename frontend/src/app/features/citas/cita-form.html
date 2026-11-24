@@ -1,9 +1,242 @@
-<div class="form-card"><h2 class="h3">Solicita tu cita</h2><p>Las solicitudes se confirman con la clínica. Atención de lunes a sábado.</p>
-@if(error()){<div class="alert alert-danger" role="alert">{{error()}}</div>}
-@if(catalogoError()){<div class="alert alert-warning" role="alert">No se pudieron cargar las opciones. <button type="button" class="btn btn-sm btn-outline-dark" (click)="cargarCatalogos()">Reintentar</button></div>}
-@if(exito()){<div class="alert alert-success" role="status">{{exito()}}</div>}
-<form [formGroup]="form" (ngSubmit)="guardar()" novalidate><div class="row"><div class="col-md-6"><label for="nombre" class="form-label">Nombres</label><input id="nombre" type="text" class="form-control" formControlName="nombre" maxlength="50" autocomplete="given-name" [attr.aria-invalid]="form.controls.nombre.touched && form.controls.nombre.invalid" aria-describedby="nombre-error"><app-field-error id="nombre-error" [control]="form.controls.nombre"/><label for="dni" class="form-label">DNI (8 dígitos)</label><input id="dni" type="text" class="form-control" formControlName="dni" inputmode="numeric" maxlength="8" [attr.aria-invalid]="form.controls.dni.touched && form.controls.dni.invalid" aria-describedby="dni-error"><app-field-error id="dni-error" [control]="form.controls.dni"/><label for="email" class="form-label">Correo electrónico</label><input id="email" type="email" class="form-control" formControlName="email" autocomplete="email" maxlength="150" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error"><app-field-error id="email-error" [control]="form.controls.email"/></div><div class="col-md-6"><label for="apellido" class="form-label">Apellidos</label><input id="apellido" type="text" class="form-control" formControlName="apellido" maxlength="50" autocomplete="family-name" [attr.aria-invalid]="form.controls.apellido.touched && form.controls.apellido.invalid" aria-describedby="apellido-error"><app-field-error id="apellido-error" [control]="form.controls.apellido"/><label for="telefono" class="form-label">Celular (9 dígitos)</label><input id="telefono" type="tel" class="form-control" formControlName="telefono" autocomplete="tel" maxlength="9" [attr.aria-invalid]="form.controls.telefono.touched && form.controls.telefono.invalid" aria-describedby="telefono-error"><app-field-error id="telefono-error" [control]="form.controls.telefono"/></div></div>
-<label class="form-label" for="doctorId">Doctor de preferencia</label><select id="doctorId" class="form-select" formControlName="doctorId"><option [ngValue]="null">Sin preferencia</option>@for(d of doctores();track d.id){<option [ngValue]="d.id">{{d.nombre}} · {{d.especialidad}}</option>}</select><app-field-error [control]="form.controls.doctorId"/>
-<label class="form-label" for="tratamientoId">Tratamiento</label><select id="tratamientoId" class="form-select" formControlName="tratamientoId"><option [ngValue]="null">Evaluación general</option>@for(t of tratamientos();track t.id){<option [ngValue]="t.id">{{t.nombre}}</option>}</select><app-field-error [control]="form.controls.tratamientoId"/>
-<div class="row"><div class="col-md-6"><label for="fecha" class="form-label">Fecha</label><input id="fecha" type="date" class="form-control" formControlName="fecha" [min]="hoy" [attr.aria-invalid]="form.controls.fecha.touched && form.controls.fecha.invalid" aria-describedby="fecha-error"><app-field-error id="fecha-error" [control]="form.controls.fecha"/></div><div class="col-md-6"><label class="form-label" for="hora">Hora</label><select id="hora" class="form-select" formControlName="hora"><option value="">Selecciona una hora</option>@for(h of horas();track h){<option [value]="h">{{h}}</option>}</select><app-field-error [control]="form.controls.hora"/></div></div><label for="motivo" class="form-label">Motivo de la visita</label><input id="motivo" type="text" class="form-control" formControlName="motivo" maxlength="150" [attr.aria-invalid]="form.controls.motivo.touched && form.controls.motivo.invalid" aria-describedby="motivo-error"><app-field-error id="motivo-error" [control]="form.controls.motivo"/><label class="form-label" for="notas">Comentarios adicionales (opcional)</label><textarea id="notas" class="form-control" rows="3" formControlName="notas" maxlength="1000"></textarea><app-field-error [control]="form.controls.notas"/>
-<button class="btn btn-brand mt-4" type="submit" [disabled]="enviando()">{{enviando() ? 'Enviando…' : 'Solicitar cita'}}</button></form></div>
+@if (exito()) {
+  <div class="alert alert-success alert-dismissible fade show" role="status">
+    <i class="fas fa-check-circle me-2"></i>{{ exito()
+    }}<button
+      type="button"
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="exito.set('')"
+    ></button>
+  </div>
+}
+@if (error()) {
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ error()
+    }}<button
+      type="button"
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="error.set('')"
+    ></button>
+  </div>
+}
+@if (catalogoError()) {
+  <div class="alert alert-warning" role="alert">
+    No se pudieron cargar las opciones.
+    <button class="btn btn-sm btn-outline-dark" (click)="cargarCatalogos()">
+      Reintentar
+    </button>
+  </div>
+}
+<form
+  [formGroup]="form"
+  (ngSubmit)="guardar()"
+  novalidate
+  method="POST"
+  class="contact-form bg-white p-4 p-md-5 shadow-sm"
+  style="border-radius: 8px"
+>
+  <div class="row g-4">
+    <div class="col-md-6 form-group">
+      <label for="nombre" class="form-label small fw-semibold text-muted"
+        >Nombre</label
+      >
+      <input
+        type="text"
+        id="nombre"
+        formControlName="nombre"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Nombre"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.nombre" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="apellido" class="form-label small fw-semibold text-muted"
+        >Apellido</label
+      >
+      <input
+        type="text"
+        id="apellido"
+        formControlName="apellido"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Apellido"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.apellido" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="dni" class="form-label small fw-semibold text-muted"
+        >DNI (8 dígitos)</label
+      >
+      <input
+        type="text"
+        id="dni"
+        formControlName="dni"
+        maxlength="8"
+        pattern="\d&#123;8&#125;"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Ej. 12345678"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.dni" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="telefono" class="form-label small fw-semibold text-muted"
+        >Teléfono Celular (9 dígitos)</label
+      >
+      <input
+        type="tel"
+        id="telefono"
+        formControlName="telefono"
+        maxlength="9"
+        pattern="\d&#123;9&#125;"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Ej. 987654321"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.telefono" />
+    </div>
+
+    <div class="col-md-12 form-group">
+      <label for="email" class="form-label small fw-semibold text-muted"
+        >Correo Electrónico</label
+      >
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="tu&#64;correo.com"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.email" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="doctorId" class="form-label small fw-semibold text-muted"
+        >Especialista (Opcional)</label
+      >
+      <select
+        id="doctorId"
+        formControlName="doctorId"
+        class="form-select rounded-1 border-secondary-subtle py-2.5"
+        style="font-size: 0.9rem"
+      >
+        <option [ngValue]="null">Cualquier especialista disponible</option>
+        @for (doc of doctores(); track doc.id) {
+          <option [ngValue]="doc.id">
+            {{ doc.nombre
+            }}{{ doc.especialidad ? " - " + doc.especialidad : "" }}
+          </option>
+        }
+      </select>
+      <app-field-error [control]="form.controls.doctorId" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="tratamientoId" class="form-label small fw-semibold text-muted"
+        >Tratamiento (Opcional)</label
+      >
+      <select
+        id="tratamientoId"
+        formControlName="tratamientoId"
+        class="form-select rounded-1 border-secondary-subtle py-2.5"
+        style="font-size: 0.9rem"
+      >
+        <option [ngValue]="null">Seleccionar tratamiento dental</option>
+        @for (trat of tratamientos(); track trat.id) {
+          <option [ngValue]="trat.id">{{ trat.nombre }}</option>
+        }
+      </select>
+      <app-field-error [control]="form.controls.tratamientoId" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="fecha" class="form-label small fw-semibold text-muted"
+        >Fecha de Cita</label
+      >
+      <input
+        type="date"
+        [min]="hoy"
+        id="fecha"
+        formControlName="fecha"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        style="font-size: 0.9rem; color: #6c757d"
+      />
+      <app-field-error [control]="form.controls.fecha" />
+    </div>
+
+    <div class="col-md-6 form-group">
+      <label for="hora" class="form-label small fw-semibold text-muted"
+        >Hora (Citas en punto)</label
+      >
+      <select
+        id="hora"
+        formControlName="hora"
+        class="form-select rounded-1 border-secondary-subtle py-2.5"
+        style="font-size: 0.9rem"
+      >
+        <option value="">Selecciona hora</option>
+        @for (h of horas(); track h) {
+          <option [value]="h">{{ horaTexto(h) }}</option>
+        }
+      </select>
+      <app-field-error [control]="form.controls.hora" />
+    </div>
+
+    <div class="col-12 form-group">
+      <label for="motivo" class="form-label small fw-semibold text-muted"
+        >Motivo de tu consulta</label
+      >
+      <input
+        type="text"
+        id="motivo"
+        formControlName="motivo"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Ej. Dolor de muela, revisión general, profilaxis"
+        style="font-size: 0.9rem"
+      />
+      <app-field-error [control]="form.controls.motivo" />
+    </div>
+
+    <div class="col-12 form-group">
+      <label for="notas" class="form-label small fw-semibold text-muted"
+        >Notas adicionales para el doctor</label
+      >
+      <textarea
+        id="notas"
+        formControlName="notas"
+        class="form-control rounded-1 border-secondary-subtle py-2.5"
+        placeholder="Notas o detalles adicionales para el doctor..."
+        rows="4"
+        style="font-size: 0.9rem; resize: none"
+      ></textarea>
+      <app-field-error [control]="form.controls.notas" />
+    </div>
+
+    <div class="col-12 text-center mt-4">
+      <button
+        type="submit"
+        [disabled]="enviando()"
+        class="btn btn-outline-dark px-5 py-2.5 fw-bold rounded-1 btn-form text-uppercase"
+        style="transition: 0.3s; letter-spacing: 1px; font-size: 0.9rem"
+        (mouseenter)="
+          $any($event.currentTarget).style.backgroundColor = '#00BCD4';
+          $any($event.currentTarget).style.borderColor = '#00BCD4';
+          $any($event.currentTarget).style.color = 'white'
+        "
+        (mouseleave)="
+          $any($event.currentTarget).style.backgroundColor = 'transparent';
+          $any($event.currentTarget).style.borderColor = '#212529';
+          $any($event.currentTarget).style.color = '#212529'
+        "
+      >
+        SOLICITAR CITA
+      </button>
+    </div>
+  </div>
+</form>

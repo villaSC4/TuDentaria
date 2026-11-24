@@ -1,14 +1,14 @@
 # Entorno de demostración con H2 en memoria. No usar con datos reales.
 services:
   backend:
-    build: .
+    build: ./backend
     environment:
       SPRING_PROFILES_ACTIVE: local
       APP_ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@tudentaria.com}
       APP_ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Define ADMIN_PASSWORD en .env}
       APP_JWT_SECRET: ${JWT_SECRET:?Define JWT_SECRET en .env}
     ports:
-      - "127.0.0.1:8081:8080"
+      - "127.0.0.1:8080:8080"
     volumes:
       - fotos:/app/uploads
   frontend:

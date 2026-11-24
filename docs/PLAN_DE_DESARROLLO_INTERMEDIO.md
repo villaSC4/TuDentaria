@@ -1,9 +1,10 @@
 # Plan de Desarrollo de Software — TuDentaria
 ## Versión intermedia: migración de Thymeleaf a Angular
 
-**Fecha de verificación:** 11 de noviembre de 2026, hora de Lima.  
-**Rama de trabajo:** `Cesar`.  
-**Estado:** implementación local y verificación intermedia; sin despliegue.  
+**Fecha de verificación:** 11 de noviembre de 2026, hora de Lima.
+**Rama de la migración original:** `Cesar`.
+**Reorganización de carpetas:** `Acceso/administrador`, 23 de noviembre de 2026.
+**Estado:** implementación local y verificación intermedia; sin despliegue.
 **Integrantes, curso y docente:** completar con los datos del equipo.
 
 ## 1. Descripción del proyecto
@@ -68,29 +69,30 @@ Se verificó localmente con JDK 21 y Node 24. El `package-lock.json` permite ins
 
 ```text
 TuDentaria/
-├── src/main/java/com/utp/tudentaria/
-│   ├── config/         seguridad web, JWT y CORS
-│   ├── controller/     controladores MVC conservados y endpoints REST
-│   ├── dto/            entrada validada y respuestas sin contraseñas
-│   ├── service/        reglas de usuarios, citas y catálogos
-│   ├── repository/     acceso a datos con JPA
-│   └── model/          entidades existentes
-├── src/main/resources/
-│   ├── templates/      vistas Thymeleaf originales
-│   └── static/         recursos originales
+├── backend/
+│   ├── src/main/java/com/utp/tudentaria/
+│   │   ├── config/         seguridad, JWT y CORS
+│   │   ├── controller/     controladores MVC y REST
+│   │   ├── dto/            entrada validada y respuestas
+│   │   ├── service/        reglas de negocio
+│   │   ├── repository/     acceso a datos JPA
+│   │   └── model/          entidades
+│   ├── src/main/resources/ configuración y vistas Thymeleaf conservadas
+│   ├── src/test/           pruebas Java
+│   ├── uploads/            fotografías cargadas
+│   ├── data/               archivos locales conservados
+│   ├── pom.xml             compilación Maven
+│   └── Dockerfile
 ├── frontend/
-│   ├── src/app/core/   servicios API/auth, interceptor, guards y modelos
-│   ├── src/app/shared/ encabezado, pie de página y errores de campos
-│   ├── src/app/features/
-│   │   ├── public/     inicio, nosotros, servicios, blog, 403 y 404
-│   │   ├── auth/       login y registro
-│   │   ├── citas/      contacto, formulario y mis citas
-│   │   ├── perfil/     actualización de datos
-│   │   └── admin/      paneles de gestión
+│   ├── src/app/core/       servicios, interceptor, guards y modelos
+│   ├── src/app/shared/     componentes reutilizables
+│   ├── src/app/features/   páginas agrupadas por funcionalidad
 │   ├── src/app/app.routes.ts
-│   ├── public/         imágenes y video reutilizados
-│   └── e2e/            casos de prueba de navegador
-└── docs/               plan, guía, colección y evidencias
+│   ├── public/             imágenes y video
+│   ├── e2e/                casos de navegador
+│   └── Dockerfile
+├── docs/                   plan, guía y evidencias
+└── compose.yaml            ejecución conjunta opcional
 ```
 
 Flujo principal: **componente Angular → servicio con `inject(HttpClient)` → API Spring Boot → servicio de negocio → repositorio JPA**. Las pantallas no ejecutan peticiones HTTP directamente. El interceptor añade Bearer a la API; los guards controlan la navegación y Spring Security valida la autorización efectiva.

@@ -58,7 +58,12 @@
               "buildTarget": "tudentaria:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.cjs",
+            "host": "127.0.0.1",
+            "port": 4200
+          }
         }
       }
     }

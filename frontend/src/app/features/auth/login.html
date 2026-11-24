@@ -1,1 +1,151 @@
-<section class="container auth-page"><div class="form-card"><h1 class="h3">Ingresa a TuDentaria</h1>@if(error()) { <div class="alert alert-danger" role="alert">{{error()}}</div> }@if(exito()) { <div class="alert alert-success" role="status">{{exito()}}</div> }<form [formGroup]="form" (ngSubmit)="guardar()" novalidate><label for="email" class="form-label">Correo electrónico</label><input id="email" type="email" class="form-control" formControlName="email" autocomplete="username" maxlength="150" [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid" aria-describedby="email-error"><app-field-error id="email-error" [control]="form.controls.email"/><label for="password" class="form-label">Contraseña</label><input id="password" type="password" class="form-control" formControlName="password" autocomplete="current-password" maxlength="72" [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid" aria-describedby="password-error"><app-field-error id="password-error" [control]="form.controls.password"/><button class="btn btn-brand mt-4 w-100" type="submit" [disabled]="enviando()">{{enviando() ? 'Procesando…' : 'Ingresar'}}</button></form></div></section><p class="container text-center">¿Aún no tienes cuenta? <a routerLink="/registro">Regístrate</a></p>
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div
+    class="card p-4 md-p-5 border-0 bg-white"
+    style="
+      max-width: 440px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    "
+  >
+    <div class="text-center mb-4">
+      <a routerLink="/">
+        <img
+          src="/img/logo.png"
+          alt="TuDentaria"
+          height="75"
+          style="object-fit: contain"
+        />
+      </a>
+      <h1
+        class="h4 fw-bold mt-4 mb-1 text-uppercase"
+        style="color: #1f4b61; letter-spacing: 1px"
+      >
+        Iniciar Sesión
+      </h1>
+      <p class="text-muted small">
+        Ingresa tus credenciales para acceder a tu cuenta clínica
+      </p>
+    </div>
+
+    @if (error()) {
+      <div
+        class="alert alert-danger p-2 small text-center rounded-2 border-0"
+        role="alert"
+        style="background-color: #fde8e8; color: #e02424"
+      >
+        <i class="fas fa-exclamation-circle me-1"></i>{{ error() }}
+      </div>
+    }
+    @if (exito()) {
+      <div
+        class="alert alert-info p-2 small text-center rounded-2 border-0"
+        role="status"
+        style="background-color: #e1f5fe; color: #0288d1"
+      >
+        <i class="fas fa-info-circle me-1"></i>{{ exito() }}
+      </div>
+    }
+    <form
+      [formGroup]="form"
+      (ngSubmit)="guardar()"
+      novalidate
+      method="POST"
+      class="mt-2"
+    >
+      <div class="mb-3">
+        <label for="email" class="form-label small fw-semibold text-secondary"
+          >Correo Electrónico</label
+        >
+        <div class="input-group">
+          <span
+            class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"
+            ><i class="far fa-envelope"></i
+          ></span>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            name="username"
+            class="form-control bg-light border-start-0 rounded-end-2 py-2"
+            placeholder="ejemplo&#64;correo.com"
+            required
+            style="font-size: 0.9rem"
+          />
+        </div>
+        <app-field-error [control]="form.controls.email" />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="password"
+          class="form-label small fw-semibold text-secondary"
+          >Contraseña</label
+        >
+        <div class="input-group">
+          <span
+            class="input-group-text bg-light border-end-0 rounded-start-2 text-muted"
+            ><i class="fas fa-lock"></i
+          ></span>
+          <input
+            [type]="mostrarPassword() ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            name="password"
+            class="form-control bg-light border-start-0 py-2"
+            placeholder="••••••••"
+            required
+            style="font-size: 0.9rem"
+          />
+          <button
+            class="input-group-text bg-light border-start-0 rounded-end-2 text-muted"
+            type="button"
+            (click)="mostrarPassword.set(!mostrarPassword())"
+            [attr.aria-label]="
+              mostrarPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'
+            "
+            [attr.aria-pressed]="mostrarPassword()"
+          >
+            <i
+              id="eyeIcon"
+              class="far"
+              [class.fa-eye]="!mostrarPassword()"
+              [class.fa-eye-slash]="mostrarPassword()"
+            ></i>
+          </button>
+        </div>
+        <app-field-error [control]="form.controls.password" />
+      </div>
+
+      <button
+        type="submit"
+        aria-label="Ingresar"
+        [disabled]="enviando()"
+        class="btn btn-dark w-100 py-2.5 fw-bold text-uppercase mb-3 rounded-2 shadow-sm"
+        style="
+          background-color: #1f4b61;
+          border-color: #1f4b61;
+          transition: 0.3s;
+          font-size: 0.9rem;
+          letter-spacing: 0.5px;
+        "
+      >
+        <i class="fas fa-sign-in-alt me-2"></i> Ingresar
+      </button>
+
+      <div class="text-center mt-3 border-top pt-3">
+        <span class="small text-muted"
+          >¿Aún no tienes cuenta con nosotros?
+        </span>
+        <a
+          routerLink="/registro"
+          class="small fw-bold text-decoration-none"
+          style="color: #00bcd4"
+          >Regístrate aquí</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

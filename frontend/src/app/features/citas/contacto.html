@@ -1,1 +1,133 @@
-<div class="page-heading"><div class="container"><h1>Contacto</h1><p>Estamos aquí para cuidar tu sonrisa.</p></div></div><section class="container py-5"><div class="row g-4"><aside class="col-lg-4"><h2 class="h4">Conversemos</h2><p><a href="tel:+51913359948">913 359 948</a></p><p><a href="mailto:info@tudentaria.com">info&#64;tudentaria.com</a></p><h3 class="h5">Horarios</h3><p>Lunes a viernes: 8:00–18:00<br>Sábados: 9:00–13:00<br>Domingos: cerrado</p><a class="btn btn-outline-dark" href="https://wa.me/51913359948" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a></aside><div class="col-lg-8"><app-cita-form/></div></div></section>
+<section class="page-title bg-light py-5 text-center text-md-start">
+  <div class="container">
+    <h1 class="fw-bold display-5 mb-2">Contacto</h1>
+    <p class="text mb-0">Inicio / Contacto</p>
+  </div>
+</section>
+
+<section class="contact-page-section py-5 bg-light">
+  <div class="container" style="max-width: 850px">
+    <div class="section-header text-center mb-5">
+      <span
+        class="section-subtitle d-block fw-bold mb-2 text-uppercase small"
+        style="color: #00bcd4; letter-spacing: 1.5px"
+        >CONTÁCTANOS</span
+      >
+      <h2 class="section-title fw-bold text-uppercase mb-3">
+        Solicita una Cita
+      </h2>
+      <p
+        class="section-description text-muted mx-auto"
+        style="max-width: 700px; font-size: 0.9rem"
+      >
+        Completa el siguiente formulario y te contactaremos durante nuestro
+        horario de atención. Si tienes una emergencia dental, por favor llama al
+        <strong class="text-dark">913 359 948</strong>. La atención de urgencia
+        suele prestarse el mismo día.
+      </p>
+    </div>
+    <app-cita-form />
+  </div>
+</section>
+<section class="social-section py-5 bg-white">
+  <div class="container text-center">
+    <div class="section-header mb-4">
+      <h2 class="section-title fw-bold" style="color: #2c3e50; font-size: 2rem">
+        Nuestras Redes
+      </h2>
+    </div>
+
+    <div
+      class="row g-3 justify-content-center mx-auto"
+      style="max-width: 900px"
+    >
+      <div class="col-6 col-md-3">
+        <a
+          href="https://www.facebook.com/tudentariaconsultorio?locale=es_LA"
+          target="_blank"
+          class="d-flex align-items-center justify-content-center text-white w-100 fs-4 text-decoration-none"
+          style="
+            height: 75px;
+            background-color: #4a6582;
+            border-radius: 8px;
+            transition: 0.3s;
+          "
+          (mouseenter)="
+            $any($event.currentTarget).style.backgroundColor = '#00BCD4'
+          "
+          (mouseleave)="
+            $any($event.currentTarget).style.backgroundColor = '#4A6582'
+          "
+        >
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <a
+          href="https://www.instagram.com/tu.dentaria/"
+          target="_blank"
+          class="d-flex align-items-center justify-content-center text-white w-100 fs-4 text-decoration-none"
+          style="
+            height: 75px;
+            background-color: #4a6582;
+            border-radius: 8px;
+            transition: 0.3s;
+          "
+          (mouseenter)="
+            $any($event.currentTarget).style.backgroundColor = '#00BCD4'
+          "
+          (mouseleave)="
+            $any($event.currentTarget).style.backgroundColor = '#4A6582'
+          "
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <a
+          href="https://www.linkedin.com"
+          target="_blank"
+          class="d-flex align-items-center justify-content-center text-white w-100 fs-4 text-decoration-none"
+          style="
+            height: 75px;
+            background-color: #4a6582;
+            border-radius: 8px;
+            transition: 0.3s;
+          "
+          (mouseenter)="
+            $any($event.currentTarget).style.backgroundColor = '#00BCD4'
+          "
+          (mouseleave)="
+            $any($event.currentTarget).style.backgroundColor = '#4A6582'
+          "
+        >
+          <i class="fab fa-linkedin-in fw-bold"></i>
+        </a>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <a
+          href="https://www.youtube.com"
+          target="_blank"
+          class="d-flex align-items-center justify-content-center text-white w-100 fs-4 text-decoration-none"
+          style="
+            height: 75px;
+            background-color: #4a6582;
+            border-radius: 8px;
+            transition: 0.3s;
+          "
+          (mouseenter)="
+            $any($event.currentTarget).style.backgroundColor = '#00BCD4'
+          "
+          (mouseleave)="
+            $any($event.currentTarget).style.backgroundColor = '#4A6582'
+          "
+        >
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
